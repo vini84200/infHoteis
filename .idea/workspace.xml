@@ -5,17 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6e8ba5cf-0c30-484d-ac23-7bd007341f24" name="Changes" comment="Created Next Appw">
-      <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/.idea/inf_hoteis_frontend.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/.env.development" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/apiOperations/api.ts" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/apiOperations/users/getMe.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/apiOperations/users/login.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/login/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/providers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2bd3b901-eff6-4706-a131-590c6c76d98b.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2bd3b901-eff6-4706-a131-590c6c76d98b.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/infHoteis/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/infHoteis/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infHoteis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/infHoteis/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/dev/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/dev/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/dev/palette.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/dev/previews.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/dev/useInitial.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/tailwind.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,23 +49,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Django Server.infHoteis.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Django Server.infHoteis.executor": "Run",
+    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "END-12",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="infHoteis" type="Python.DjangoServer" factoryName="Django server">
       <module name="infHoteis" />
@@ -101,6 +110,7 @@
       <updated>1702251632604</updated>
       <workItem from="1702251645448" duration="2689000" />
       <workItem from="1702256647785" duration="29000" />
+      <workItem from="1702263870756" duration="2114000" />
     </task>
     <task id="LOCAL-00001" summary="Created Next App">
       <option name="closed" value="true" />
