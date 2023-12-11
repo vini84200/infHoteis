@@ -42,7 +42,7 @@ api.interceptors.response.use(
         const response = await axios.post(`${baseURL}/auth/jwt/refresh/`, {refresh: refreshToken});
         if (response.status === 200) {
           localStorage.setItem('token', response.data.access);
-          originalRequest.headers.Authorization = `Bearer ${response.data.token}`;
+          originalRequest.headers.Authorization = `Token ${response.data.access}`;
           return axios(originalRequest);
         }
         if (response.status === 401) {

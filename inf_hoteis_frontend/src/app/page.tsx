@@ -1,14 +1,29 @@
 'use client';
 import React from 'react'
-import {useQuery} from '@tanstack/react-query'
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import getMe from "@/apiOperations/users/getMe";
 import {Button, Spin} from "antd";
 import Link from "next/link";
 
+async function logout() {
+  localStorage.removeItem('token')
+  localStorage.removeItem('refresh_token')
+}
+
 export default function Home() {
   const meQuery = useQuery({
     queryKey: ['me'],
-    queryFn: () => getMe()
+    queryFn: () => getMe(),
+  })
+  const queryClient = useQueryClient()
+  const logoutMutation = useMutation({
+    mutationKey: ['logout'],
+    mutationFn: () => logout(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        type: 'all'
+      })
+    }
   })
   if (meQuery.isPending) {
     return <Spin fullscreen delay={200}/>
@@ -31,6 +46,9 @@ export default function Home() {
               {' '}
               {meQuery.data?.username}
             </span>
+            <Button type={"link"} onClick={() => logoutMutation.mutate()}>
+              Sair
+            </Button>
           </div>
         ) : (
           <div className={"flex flex-col justify-center items-center h-screen"}>
