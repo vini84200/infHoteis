@@ -39,8 +39,10 @@ api.interceptors.response.use(
           console.log("No refresh token");
           return Promise.reject(error);
         }
+        console.log("Refreshing token");
         const response = await axios.post(`${baseURL}/auth/jwt/refresh/`, {refresh: refreshToken});
         if (response.status === 200) {
+          console.log("Token refreshed");
           localStorage.setItem('token', response.data.access);
           originalRequest.headers.Authorization = `Token ${response.data.access}`;
           return axios(originalRequest);
@@ -54,6 +56,7 @@ api.interceptors.response.use(
         return Promise.reject(error);
       }
     }
+    return Promise.reject(error);
   }
 )
 export default api;
