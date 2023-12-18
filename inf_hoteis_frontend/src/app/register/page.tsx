@@ -6,6 +6,7 @@ import {register} from "@/apiOperations/users/register";
 import {useRouter} from "next/navigation";
 import {AxiosError} from "axios";
 import Link from "next/link";
+import Title from 'antd/es/typography/Title';
 
 interface RegisterFormData {
   username: string;
@@ -57,7 +58,16 @@ function Page() {
     <div>
       {contextHolder}
 
-      Cadastro
+      <div className={"grid md:grid-cols-2 h-screen"}>
+        <div>
+          <div
+            className={"flex flex-col justify-center items-center h-screen"}
+          >
+            <h1
+              className={"md:invisible text-6xl font-bold m-0 bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text"}>
+              Inf Hotéis
+            </h1>
+            <Title level={1}>Criar conta</Title>
       <Form
         onFinish={onFormFinish}
         form={form}
@@ -134,6 +144,18 @@ function Page() {
           </Link>
         </Form.Item>
       </Form>
+
+          </div>
+        </div>
+        <div className={"hidden md:block"}>
+          <div className={"md:h-full bg-gradient-to-r from-cyan-500 to-blue-500 py-8"}>
+            <h1
+              className={"text-6xl text-center text-white font-bold h-full flex flex-col justify-center items-center m-0"}>
+              Inf Hotéis
+            </h1>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
