@@ -16,7 +16,7 @@ function login(username: string, password: string): Promise<LoginResponse> {
         if (error.response.status === 401) {
           throw new Error('O nome de usuário ou a senha estão incorretos');
         }
-        throw new Error('Something went wrong');
+        throw new Error('Algo deu errado');
       }
       throw error;
     });

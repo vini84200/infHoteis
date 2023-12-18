@@ -4,6 +4,7 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {Button, Divider, Form, Input, message, Typography} from "antd";
 import login from "@/apiOperations/users/login";
 import {useRouter} from "next/navigation";
+import Link from "next/link";
 
 const {Title} = Typography;
 
@@ -24,14 +25,12 @@ export default function Login() {
       console.log("Erro mu")
       messageApi.error(error.message);
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       messageApi.success("Login realizado com sucesso!");
       queryClient.invalidateQueries({
         queryKey: ['me']
       })
       router.push('/');
-
-
     }
   })
 
@@ -43,10 +42,6 @@ export default function Login() {
   const onFormFinishFailed = (errorInfo: any) => {
     // todo handle form finish fail
     console.log('Failed:', errorInfo);
-  };
-
-  const onFormClearClick = () => {
-    form.resetFields();
   };
 
   return (
@@ -103,9 +98,11 @@ export default function Login() {
             </Form>
             <Divider/>
             Ou
-            <Button type="link" className={"mr-2"}>
-              Criar uma conta
-            </Button>
+            <Link href={"/register"}>
+              <Button type="link" className={"mr-2"}>
+                Criar uma conta
+              </Button>
+            </Link>
           </div>
         </div>
         <div className={"hidden md:block"}>
