@@ -20,17 +20,17 @@ function Page() {
   const [form] = Form.useForm();
   const registerMutation = useMutation({
     mutationFn: (data: RegisterFormData) => {
-      console.log(data)
+      // console.log(data)
       return register(data.username, data.password, data.email)
     },
     onSuccess: () => {
-      console.log("Success")
+      // console.log("Success")
       messageApi.success("Cadastro realizado com sucesso!");
       router.push('/login');
     },
     onError: (error: AxiosError) => {
-      console.log("Erro")
-      console.log(error)
+      // console.log("Erro")
+      // console.log(error)
       if (error.message === "Network Error") {
         messageApi.error("Não foi possível se conectar ao servidor!")
         return
@@ -50,7 +50,7 @@ function Page() {
     }
   })
   const onFormFinish = (values: RegisterFormData) => {
-    console.log('Success:', values);
+    // console.log('Success:', values);
     registerMutation.mutate(values);
   };
 

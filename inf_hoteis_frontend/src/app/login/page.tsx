@@ -22,7 +22,7 @@ export default function Login() {
     mutationKey: ['login'],
     mutationFn: (data: LoginFormData) => login(data.username, data.password),
     onError: (error) => {
-      console.log("Erro mu")
+      // console.log("Erro mu")
       messageApi.error(error.message);
     },
     onSuccess: () => {
@@ -35,13 +35,13 @@ export default function Login() {
   })
 
   const onFormFinish = (values: LoginFormData) => {
-    console.log('Success:', values);
+    // console.log('Success:', values);
     loginMutation.mutate(values);
   };
 
   const onFormFinishFailed = (errorInfo: any) => {
     // todo handle form finish fail
-    console.log('Failed:', errorInfo);
+    // console.log('Failed:', errorInfo);
   };
 
   return (
