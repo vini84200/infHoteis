@@ -3,3 +3,4 @@
 .env
 /.env
 /infHoteis/__pycache__
+node_modules
