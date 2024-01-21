@@ -9,7 +9,15 @@ function Providers(props: { children: React.ReactNode }) {
   {
     const [queryClient] = React.useState(() => new QueryClient())
     return (
-      <ConfigProvider>
+      <ConfigProvider
+      theme={{
+        token: {
+          // Seed Token
+          colorPrimary: '#b91c1c',
+          colorLink: '#b91c1c',
+        }
+      }}
+      >
         <QueryClientProvider client={queryClient}>
           {props.children}
           {<ReactQueryDevtools client={queryClient}/>}
