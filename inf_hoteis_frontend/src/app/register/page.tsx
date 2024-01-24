@@ -8,6 +8,7 @@ import {AxiosError} from "axios";
 import Link from "next/link";
 import Title from 'antd/es/typography/Title';
 import SideLogo from "@components/SideLogo";
+import styles from '@styles/formPage.module.css'
 
 interface RegisterFormData {
   username: string;
@@ -58,11 +59,11 @@ function Page() {
   return (
     <div>
       {contextHolder}
-      <div className={"grid md:grid-cols-2 h-screen"}>
+      <div className={styles.container}>
         <SideLogo/>
         <div>
           <div
-            className={"flex flex-col justify-center items-center h-auto md:h-screen gap-[20px]"}
+            className={styles.formContainer}
           >
             <Title level={1}>Criar conta</Title>
             <Form
@@ -131,7 +132,7 @@ function Page() {
               </Form.Item>
 
               <Form.Item>
-                <div className={"flex flex-col gap-4 mt-[25px]"}>
+                <div className={styles.buttonContainer}>
                   <Button type="primary" className={"mr-2 size-full"} htmlType="submit">
                     Cadastrar
                   </Button>

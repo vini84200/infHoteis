@@ -1,9 +1,19 @@
 'use client';
 import React from 'react';
-import {ConfigProvider} from "antd";
+import {ConfigProvider, Layout, Menu} from "antd";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
+import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import Header from "@components/Header"
+import Sider from 'antd/es/layout/Sider';
 
+const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
+  (icon, index) => ({
+    key: String(index + 1),
+    icon: React.createElement(icon),
+    label: `nav ${index + 1}`,
+  }),
+);
 
 function Providers(props: { children: React.ReactNode }) {
   {
@@ -19,7 +29,14 @@ function Providers(props: { children: React.ReactNode }) {
       }}
       >
         <QueryClientProvider client={queryClient}>
-          {props.children}
+          <Layout>                        
+            <Header/>
+              <div style={{paddingTop: "var(--header-height)"}}></div>
+              {props.children}
+            {/* <Footer style={{ textAlign: 'center' }}>
+              Ant Design ©{new Date().getFullYear()} Created by Ant UED
+            </Footer>             */}
+          </Layout>
           {<ReactQueryDevtools client={queryClient}/>}
         </QueryClientProvider>
       </ConfigProvider>

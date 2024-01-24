@@ -1,0 +1,56 @@
+/* styles.css */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: var(--main-color);
+}
+
+.logoContainer {
+    font-family: 'Sans-Serif';
+    font-weight: normal;
+    font-size: 6rem;
+    text-align: center;
+    /* Substitua pelo seu valor de cor vermelha */
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 5px;
+}
+
+.logoLink {
+    color: #AA0000;
+    transform-origin: center;
+    transition: transform 700ms ease-in-out;
+}
+
+.logoLink:hover {
+    color: #aa0000;
+    transform: scale(1.1);
+}
+
+.logoImage {
+    height: 100px;
+    width: auto;
+    margin: 0 10px;
+}
+
+.logoTextMd {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .logoContainer {
+        flex-direction: column;
+    }
+
+    .logoTextMd {
+        display: block;
+    }
+}

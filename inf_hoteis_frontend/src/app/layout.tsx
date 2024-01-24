@@ -1,8 +1,10 @@
 import React from "react";
 import type {Metadata} from 'next'
 import {Inter} from 'next/font/google'
-import './globals.css'
 import Providers from "@/app/providers";
+import { Layout } from "antd";
+import { Footer, Header } from "antd/es/layout/layout";
+import "@styles/global.css"
 
 const inter = Inter({subsets: ['latin']})
 
@@ -25,7 +27,9 @@ export default function RootLayout({
       className={"m-0"}
     >
     <Providers>
-      {children}
+      <Layout>
+        {children}
+      </Layout>
     </Providers>
     </body>
     </html>
