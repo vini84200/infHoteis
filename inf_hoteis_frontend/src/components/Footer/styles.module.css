@@ -1,0 +1,45 @@
+/* styles/Footer.module.css */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.socialLinks {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.socialLinks a {
+    color: #fff;
+    margin: 0 10px;
+}
+
+.pageLinks{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.pageLinks a {
+    color: #fff;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.imageContainer {
+    margin: 20px 0;
+}
+
+.logo{
+    height: 70px;
+    width: auto;
+}
+
+.copyright {
+    font-size: 14px;
+    margin-top: 20px;
+}

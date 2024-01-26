@@ -6,6 +6,7 @@ import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import Header from "@components/Header"
 import Sider from 'antd/es/layout/Sider';
+import Footer from '@/components/Footer';
 
 const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
   (icon, index) => ({
@@ -31,11 +32,9 @@ function Providers(props: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <Layout>                        
             <Header/>
-              <div style={{paddingTop: "var(--header-height)"}}></div>
+              {/* <div style={{paddingTop: "var(--header-height)"}}></div> */}
               {props.children}
-            {/* <Footer style={{ textAlign: 'center' }}>
-              Ant Design ©{new Date().getFullYear()} Created by Ant UED
-            </Footer>             */}
+            <Footer/>
           </Layout>
           {<ReactQueryDevtools client={queryClient}/>}
         </QueryClientProvider>

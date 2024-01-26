@@ -71,7 +71,9 @@ const LogoComponent = () => {
     return (
         <nav className={styles.container}>
             <div className={styles.logoContainer}>
-                <Image className={styles.logo} src={logo} alt="logo" />
+                <Link style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: '10%'}} href={"/"}>
+                    <Image className={styles.logo} src={logo} alt="logo" />
+                </Link>
             </div>
             <div className={styles.linksContainer}>
                 <Link className={styles.link} href={"/login"}>Hotéis</Link>

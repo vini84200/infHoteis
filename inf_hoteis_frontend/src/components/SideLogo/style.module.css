@@ -10,11 +10,9 @@
 }
 
 .logoContainer {
-    font-family: 'Sans-Serif';
     font-weight: normal;
     font-size: 6rem;
     text-align: center;
-    /* Substitua pelo seu valor de cor vermelha */
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -42,15 +40,11 @@
 }
 
 .logoTextMd {
-    display: none;
+    display: block;
 }
 
-@media (min-width: 768px) {
-    .logoContainer {
-        flex-direction: column;
-    }
-
-    .logoTextMd {
-        display: block;
+@media (max-width: 768px) {
+    .container {
+        display: none;
     }
 }
