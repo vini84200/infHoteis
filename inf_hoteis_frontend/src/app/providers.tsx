@@ -7,6 +7,8 @@ import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/i
 import Header from "@components/Header"
 import Sider from 'antd/es/layout/Sider';
 import Footer from '@/components/Footer';
+import locale from 'antd/locale/pt_BR';
+import 'dayjs/locale/pt-br';
 
 const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
   (icon, index) => ({
@@ -28,6 +30,7 @@ function Providers(props: { children: React.ReactNode }) {
           colorLink: '#b91c1c',
         }
       }}
+      locale={locale}
       >
         <QueryClientProvider client={queryClient}>
           <Layout>                        

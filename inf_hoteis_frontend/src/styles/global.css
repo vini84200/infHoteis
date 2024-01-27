@@ -4,6 +4,7 @@
     --header-height: 80px;
     --subtitle-font-size: clamp(1rem, 2vw, 1.35rem);
     --title-font-size: clamp(1.5rem, 4vw, 2rem);
+    --button-font-size: clamp(1rem, 2vw, 1.2rem);
     --default-transition: all 0.3s ease-in-out;
 }
 
@@ -13,5 +14,9 @@
     margin: 0;
     padding: 0;
     font-family: 'Montserrat', sans-serif;
-    
+}
+
+button{
+    cursor: pointer;
+    border: none;
 }
