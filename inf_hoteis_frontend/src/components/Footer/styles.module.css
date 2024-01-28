@@ -1,9 +1,14 @@
 /* styles/Footer.module.css */
 .footer {
-    background-color: #333;
+    background-color: var(--dark-gray);
     color: #fff;
     padding: 20px;
+    height: var(--footer-height);
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
 .socialLinks {
