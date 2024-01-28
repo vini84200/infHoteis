@@ -84,3 +84,7 @@ class ReservaViewSet(viewsets.ModelViewSet):
         reserva.cancelada = True
         reserva.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def get_queryset(self):
+        return Reserva.objects.filter(cliente=self.request.user)
+
