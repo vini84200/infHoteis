@@ -1,5 +1,6 @@
 import datetime
 
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -46,6 +47,7 @@ class Quarto(models.Model):
 
 class Reserva(models.Model):
     quarto = models.ForeignKey(Quarto, on_delete=models.CASCADE, null=False)
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
     data_inicio = models.DateField()
     data_fim = models.DateField()
     hospedes = models.IntegerField()
