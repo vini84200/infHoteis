@@ -7,7 +7,8 @@ class Hotel(models.Model):
     nome = models.CharField(max_length=120)
     descricao = models.CharField(max_length=1024)
     endereco = models.CharField(max_length=1024)
-    # FOTO
+    # TODO: FOTO
+    # TODO: Posicao no mapa
     avaliacao = models.FloatField()
 
     def __str__(self):
