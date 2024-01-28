@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 
@@ -40,3 +42,21 @@ class Quarto(models.Model):
 
     def __str__(self):
         return self.numero.__str__()
+
+
+class Reserva(models.Model):
+    quarto = models.ForeignKey(Quarto, on_delete=models.CASCADE, null=False)
+    data_inicio = models.DateField()
+    data_fim = models.DateField()
+    hospedes = models.IntegerField()
+    preco = models.DecimalField(decimal_places=2, max_digits=10)
+    pago = models.BooleanField(default=False)
+    checkin = models.BooleanField(default=False)
+    checkout = models.BooleanField(default=False)
+    cancelada = models.BooleanField(default=False)
+
+    def can_cancel(self):
+        return not self.checkin and not self.cancelada and (self.data_inicio - datetime.date.today()).days >= 2
+
+    def __str__(self):
+        return self.quarto.__str__() + " - " + self.data_inicio.__str__() + " - " + self.data_fim.__str__()
