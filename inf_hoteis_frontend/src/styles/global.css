@@ -7,8 +7,10 @@
     --header-height: 80px;
     --footer-height: 250px;
     --subtitle-font-size: clamp(1rem, 2vw, 1.35rem);
+    --text-font-size: clamp(0.8rem, 1.8vw, 1rem);
     --title-font-size: clamp(1.5rem, 4vw, 2rem);
     --button-font-size: clamp(1rem, 2vw, 1.2rem);
+    --view-height: calc(100vh - var(--footer-height) - var(--header-height));
     --default-transition: all 0.3s ease-in-out;
 }
 
@@ -23,11 +25,4 @@
 button{
     cursor: pointer;
     border: none;
-}
-
-
-.ant-rate-star-zero > * > .ant-rate-star-first,
-.ant-rate-star-zero > * > .ant-rate-star-second,
-.ant-rate-star-half > * > .ant-rate-star-second{
-    color: rgba(0,0,0,0.5) !important;
 }

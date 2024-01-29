@@ -2,81 +2,117 @@
 import React, { useState } from 'react';
 import styles from "@styles/hotelsPage.module.css"
 import Sider from 'antd/lib/layout/Sider';
-import { Avaliacao, Categorias, Local, NroHospedes, PeriodoDatas, Servicos } from '@/components/Inputs';
-import { Pagination, type SelectProps } from 'antd';
-import { FilterOutlined } from '@ant-design/icons';
+import { List, Pagination, type SelectProps } from 'antd';
+import HotelCard from '@/components/HotelCard';
+
 
 export default function Hoteis() {
-  const [value, setValue] = useState<string | number | null>('1');
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
-  
-  const onSearch = (value: string) => {
-    console.log('search:', value);
-  };
+  var data = [
+    {
+      id: 1,
+      city: "RS - Gravataí",
+      street: "Rua Castilho Inácio Barcelos",
+      rate: 4
+    },
+    {
+      id: 2,
+      city: "SP - São Paulo",
+      street: "Avenida Paulista",
+      rate: 3
+    },
+    {
+      id: 3,
+      city: "RJ - Rio de Janeiro",
+      street: "Copacabana",
+      rate: 5
+    },
+    {
+      id: 4,
+      city: "MG - Belo Horizonte",
+      street: "Rua da Bahia",
+      rate: 4.5
+    },
+    {
+      id: 5,
+      city: "SC - Florianópolis",
+      street: "Avenida Beira-Mar",
+      rate: 4
+    },
+    {
+      id: 6,
+      city: "PR - Curitiba",
+      street: "Rua XV de Novembro",
+      rate: 4
+    },
+    {
+      id: 7,
+      city: "BA - Salvador",
+      street: "Pelourinho",
+      rate: 4
+    },
+    {
+      id: 8,
+      city: "PE - Recife",
+      street: "Boa Viagem",
+      rate: 5
+    },
+    {
+      id: 9,
+      city: "DF - Brasília",
+      street: "Esplanada dos Ministérios",
+      rate: 4
+    },
+    {
+      id: 10,
+      city: "AM - Manaus",
+      street: "Avenida das Torres",
+      rate: 4.5
+    },
+    {
+      id: 11,
+      city: "ES - Vitória",
+      street: "Praia do Canto",
+      rate: 3.5
+    },
+    {
+      id: 12,
+      city: "GO - Goiânia",
+      street: "Rua 83",
+      rate: 4.5
+    },
+    {
+      id: 13,
+      city: "GO - Goiânia",
+      street: "Rua 84",
+      rate: 4.5
+    }
+  ];
 
-  const options: SelectProps['options'] = [];
-
-  for (let i = 10; i < 36; i++) {
-    options.push({
-      value: i.toString(36) + i,
-      label: i.toString(36) + i,
-    });
-  }
-
+  data.sort(function(a, b){
+      return a.city.localeCompare(b.city) || a.street.localeCompare(b.street);
+  });
   return (
     <div className={styles.container}>
-      <div className={styles.filterContainer}>
-        <h2 className={styles.title}>FILTROS <FilterOutlined style={{fontSize: 20}}/></h2>
-        <div className={styles.field}>
-          <Local onChange={onChange} onSearch={onSearch}/>
-        </div>
-        <div className={styles.field}>
-          <NroHospedes value={value} setValue={setValue}/>
-        </div>
-        <div className={styles.field}>
-          <Categorias onChange={onChange} onSearch={onSearch}/>
-        </div>
-        <div className={styles.field}>
-          <PeriodoDatas />
-        </div>
-        <div className={styles.field}>
-          <Avaliacao />
-        </div>   
-        <div className={styles.field}>
-          <Servicos onChange={onChange} options={options}/>
-        </div>       
-      </div>
       <div className={styles.contentContainer}>
         <div className={styles.hotelsContainer}>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>        
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div>
-          <div className={styles.hotel}>Hotel cada hotel deve apresentar uma foto e
-  sua localização embaixo (cidade, estado e rua).</div> 
-        </div>
-        <div className={styles.pagination}>
-          <Pagination defaultCurrent={1} total={50} />       
+        <List
+          grid={{
+            column: 1,
+            xs: 1,
+            sm: 1,
+            md: 2,
+            lg: 2,
+            xl: 3,
+            xxl: 3,        
+          }}
+          pagination={{ position:'both', align:'center', defaultPageSize:12, pageSize:12}}
+          dataSource={data.sort()}
+          renderItem={(item) => (
+            <List.Item>
+              <HotelCard city={item.city} street={item.street} rate={item.rate}/>
+            </List.Item>
+          )}
+        />
         </div>
       </div>
     </div>
