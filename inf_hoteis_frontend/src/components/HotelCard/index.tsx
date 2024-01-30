@@ -2,6 +2,7 @@ import React from 'react'
 import styles from "./styles.module.css";
 import { Button, Image, Rate } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
+import Link from 'next/link';
 type Props = {
     street: String;
     city: String;
@@ -25,7 +26,9 @@ export default function HotelCard({street, city, rate}: Props) {
             </div>
             <div className={styles.buttonMenu}>
                 <Rate allowHalf disabled style={{color: "var(--red)"}} value={rate} />
-                <Button type="primary" shape="circle" icon={<RightOutlined />} size={'large'} />
+                <Link href={"/hoteis/hotel"}>
+                    <Button type="primary" shape="circle" icon={<RightOutlined />} size={'large'} />
+                </Link>
             </div>
         </div>
     </div>

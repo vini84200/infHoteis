@@ -11,6 +11,9 @@
     --title-font-size: clamp(1.5rem, 4vw, 2rem);
     --button-font-size: clamp(1rem, 2vw, 1.2rem);
     --view-height: calc(100vh - var(--footer-height) - var(--header-height));
+
+    --default-border-radius: 15px;
+    --default-box-shadow: 15px;
     --default-transition: all 0.3s ease-in-out;
 }
 
@@ -25,4 +28,8 @@
 button{
     cursor: pointer;
     border: none;
+}
+
+.ant-image-mask{
+    z-index: 999;
 }
