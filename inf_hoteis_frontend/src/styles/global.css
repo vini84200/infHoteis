@@ -4,6 +4,7 @@
     --red: #b91c1c;
     --dark-red: #7e1313;
     --red-50: rgba(185, 28, 28, 0.5);
+    --red-25: rgba(185, 28, 28, 0.25);
     --header-height: 80px;
     --footer-height: 250px;
     --subtitle-font-size: clamp(1rem, 2vw, 1.35rem);
@@ -13,7 +14,7 @@
     --view-height: calc(100vh - var(--footer-height) - var(--header-height));
 
     --default-border-radius: 15px;
-    --default-box-shadow: 15px;
+    --default-box-shadow-color: rgba(0,0,0,0.15);
     --default-transition: all 0.3s ease-in-out;
 }
 
@@ -32,4 +33,9 @@ button{
 
 .ant-image-mask{
     z-index: 999;
+}
+
+h1,h2,h3,h4,h5,h6{
+    color: var(--red);
+    text-align: center;
 }
