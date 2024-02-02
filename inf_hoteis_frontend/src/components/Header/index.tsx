@@ -76,7 +76,7 @@ const LogoComponent = () => {
                 </Link>
             </div>
             <div className={styles.linksContainer}>
-                <Link className={styles.link} href={"/login"}>Hotéis</Link>
+                <Link className={styles.link} href={"/hoteis"}>Hotéis</Link>
                 <Link className={styles.link} href={"/login"}>Serviços</Link>
                 <Link className={styles.link} href={"/login"}>História</Link>
             </div>

@@ -1,0 +1,38 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--light-gray);
+    width: 100%;
+    min-height: var(--view-height);
+    height: max-content;
+    padding: 30px 1vw;
+    position: relative;
+    transition: var(--default-transition);
+}
+
+.container > *{
+    height: 100%;
+}
+
+.contentContainer{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.hotelsContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.pagination{
+    margin: 0 auto;
+}

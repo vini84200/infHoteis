@@ -1,10 +1,16 @@
 :root{
-    --main-color: #292929;
+    --dark-gray: #181414;
+    --light-gray: #DCDCDC;
     --red: #b91c1c;
+    --dark-red: #7e1313;
+    --red-50: rgba(185, 28, 28, 0.5);
     --header-height: 80px;
+    --footer-height: 250px;
     --subtitle-font-size: clamp(1rem, 2vw, 1.35rem);
+    --text-font-size: clamp(0.8rem, 1.8vw, 1rem);
     --title-font-size: clamp(1.5rem, 4vw, 2rem);
     --button-font-size: clamp(1rem, 2vw, 1.2rem);
+    --view-height: calc(100vh - var(--footer-height) - var(--header-height));
     --default-transition: all 0.3s ease-in-out;
 }
 

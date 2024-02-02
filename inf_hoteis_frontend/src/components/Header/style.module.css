@@ -19,7 +19,7 @@
 .logoContainer{
     display: flex;
     align-items: center;
-    justify-content: start;
+    justify-content: flex-start;
     width: 33%;
 }
 
@@ -52,7 +52,7 @@
 
 .userContainer{
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     margin-right: 5%;
     width: 33%;

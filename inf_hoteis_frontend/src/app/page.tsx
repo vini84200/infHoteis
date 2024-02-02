@@ -6,10 +6,7 @@ import {Button, InputNumber, Spin} from "antd";
 import Link from "next/link";
 import styles from "@styles/home.module.css";
 
-import { DatePicker } from 'antd';
-const { RangePicker } = DatePicker;
-
-import { Select } from 'antd';
+import { Categorias, Local, NroHospedes, PeriodoDatas } from '@/components/Inputs';
 
 async function logout() {
   localStorage.removeItem('token')
@@ -17,7 +14,7 @@ async function logout() {
 }
 
 export default function Home() {
-  const [value, setValue] = useState<string | number | null>('99');
+  const [value, setValue] = useState<string | number | null>('1');
 
   const meQuery = useQuery({
     queryKey: ['me'],
@@ -48,9 +45,6 @@ export default function Home() {
     console.log('search:', value);
   };
 
-  const filterOption = (input: string, option?: { label: string; value: string }) =>
-  (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
-
   return(
     <div className={styles.container}>
       <div className={styles.entryBanner}>
@@ -61,70 +55,20 @@ export default function Home() {
         {/* transformar em form dps */}
         <div className={styles.findHotelContainer}>
           <div className={styles.field}>
-            <div className={styles.name}>Cidade</div>
-            <Select
-              style={{width: '100%'}}
-              showSearch
-              placeholder="Selecione uma cidade"
-              optionFilterProp="children"
-              onChange={onChange}
-              onSearch={onSearch}
-              filterOption={filterOption}
-              options={[
-                {
-                  value: 'rs-gravatai',
-                  label: 'RS - Gravataí',
-                },
-                {
-                  value: 'rs-portoalegre',
-                  label: 'RS - Porto Alegre',
-                },
-                {
-                  value: 'rs-cachoeirinha',
-                  label: 'RS - Cachoeirinha',
-                },
-              ]}
-            />
+            <Local onChange={onChange} onSearch={onSearch}/>
           </div>
           <div className={styles.field}>
-            <div className={styles.name}>N° de hospedes</div>
-            <div className={styles.input}><InputNumber style={{width: '100%'}} min={1} max={6} value={value} onChange={setValue} /></div>
+            <NroHospedes value={value} setValue={setValue}/>
           </div>
           <div className={styles.field}>
-            <div className={styles.name}>Tipo de quarto</div>
-            <Select
-              style={{width: '100%'}}
-              showSearch
-              placeholder="Selecione um tipo de quarto"
-              optionFilterProp="children"
-              onChange={onChange}
-              onSearch={onSearch}
-              filterOption={filterOption}
-              options={[
-                {
-                  value: 'familia-premium',
-                  label: 'Familia Premium',
-                },
-                {
-                  value: 'familia',
-                  label: 'Familia',
-                },
-                {
-                  value: 'solteiro',
-                  label: 'Solteiro',
-                },
-              ]}
-            />
+            <Categorias onChange={onChange} onSearch={onSearch}/>
           </div>
           <div className={styles.field}>
-            <div className={styles.name}>Data da viagem</div>
-            <div className={styles.input}>
-            <RangePicker style={{width: '100%'}} format={"DD/MM/YYYY"}/>
-            </div>
+            <PeriodoDatas />
           </div>
-          <button className={styles.button}>
+          <Link href="/hoteis" className={styles.button}>
             Pesquisar
-          </button>
+          </Link>
         </div>
       </div>
     </div>
