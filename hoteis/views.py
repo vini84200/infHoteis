@@ -87,4 +87,10 @@ class ReservaViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Reserva.objects.filter(cliente=self.request.user)
-
+    
+    def disponibilidade(self, request, *args, **kwargs):
+        reserva = Reserva.objects.filter(quarto=request, cancelada=True)
+        if not reserva or reserva['cancelada'] == True:
+            return Response({'detail': 'O quarto está disponível'}, status=200)
+        else:
+            return Response({'detail': 'O quarto não está disponível'}, status=200)
