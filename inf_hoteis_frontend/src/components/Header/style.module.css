@@ -1,0 +1,144 @@
+.container{
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    background-color: white;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 10px 0px 0px rgba(0,0,0,0.5);  
+    z-index: 999;
+}
+
+.container *{
+    height: 100%;
+}
+
+.logoContainer{
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 33%;
+}
+
+.logo{
+    height: 65%;
+    width: auto;
+    cursor: pointer;
+    transition: var(--default-transition);
+}
+
+.logo:hover{
+    transform: scale(1.05);
+}
+
+.linksContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 33%;
+    gap: 15%;
+}
+
+.link{
+    display: flex;
+    align-items: center;
+    font-weight: 300;
+    height: 100%;
+    font-size: clamp(0.95rem, 2vw, 1.35rem);
+}
+
+.userContainer{
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-right: 5%;
+    width: 33%;
+    gap: 40px;
+}
+
+.userIcon{
+    font-size: 70%;
+}
+
+.accountContainer{
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loginLink,
+.registerLink{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.loginLink{
+    font-size: clamp(1rem, 2vw, 1.15rem);
+}
+
+.mobileContainer{
+    display: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .userContainer,
+    .mobileLink,
+    .completeDropdown,
+    .hidden{
+        display: none;
+    }
+
+    .mobileContainer{
+        width: 20%;
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 5%;
+    }
+
+    .logoContainer{
+        width: 20%;
+    }
+
+    .linksContainer{
+        width: 40%;
+    }
+
+    .show{
+        display: flex;
+    }
+}
+
+@media only screen and (max-width: 425px) {
+    .container{
+        justify-content: space-between;
+        padding: 0 20px;
+    }
+
+    .mobileLink{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .linksContainer,
+    .hideMobile,
+    .show{
+        display: none;
+    }
+
+    .completeDropdown{
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .hidden{
+        display: flex;
+    }
+}

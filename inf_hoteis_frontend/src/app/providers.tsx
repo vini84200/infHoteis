@@ -1,9 +1,22 @@
 'use client';
 import React from 'react';
-import {ConfigProvider} from "antd";
+import {ConfigProvider, Layout, Menu} from "antd";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
+import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
+import Header from "@components/Header"
+import Sider from 'antd/es/layout/Sider';
+import Footer from '@/components/Footer';
+import locale from 'antd/locale/pt_BR';
+import 'dayjs/locale/pt-br';
 
+const items = [UserOutlined, VideoCameraOutlined, UploadOutlined, UserOutlined].map(
+  (icon, index) => ({
+    key: String(index + 1),
+    icon: React.createElement(icon),
+    label: `nav ${index + 1}`,
+  }),
+);
 
 function Providers(props: { children: React.ReactNode }) {
   {
@@ -17,9 +30,15 @@ function Providers(props: { children: React.ReactNode }) {
           colorLink: '#b91c1c',
         }
       }}
+      locale={locale}
       >
         <QueryClientProvider client={queryClient}>
-          {props.children}
+          <Layout>                        
+            <Header/>
+              {/* <div style={{paddingTop: "var(--header-height)"}}></div> */}
+              {props.children}
+            <Footer/>
+          </Layout>
           {<ReactQueryDevtools client={queryClient}/>}
         </QueryClientProvider>
       </ConfigProvider>

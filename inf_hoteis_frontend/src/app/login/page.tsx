@@ -6,6 +6,7 @@ import login from "@/apiOperations/users/login";
 import {useRouter, useSearchParams} from "next/navigation";
 import Link from "next/link";
 import SideLogo from "@components/SideLogo"
+import styles from '@styles/formPage.module.css'
 
 const {Title} = Typography;
 
@@ -52,11 +53,11 @@ export default function Login() {
   return (
     <div>
       {contextHolder}
-      <div className={"grid md:grid-cols-2 h-screen"}>
+      <div className={styles.container}>
         <SideLogo/>
         <div>
           <div
-            className={"flex flex-col justify-center items-center h-auto md:h-screen"}
+            className={styles.formContainer}
           >
             <Title level={1}>Entrar</Title>
             <Form<LoginFormData>
@@ -90,8 +91,8 @@ export default function Login() {
               </Form.Item>
 
               <Form.Item>
-                <div className={"flex flex-col gap-4"}>
-                  <Button type="primary" className={"mr-2 size-full"} htmlType="submit">
+                <div className={styles.buttonContainer}>
+                  <Button type="primary" htmlType="submit">
                     Entrar
                   </Button>
                   <Button htmlType="button" type={"link"}>
@@ -104,7 +105,7 @@ export default function Login() {
             Ou             
             </Divider>
             <Link href={"/register"}>
-              <Button type="link" className={"mr-2"}>
+              <Button type="link">
                 Criar uma conta
               </Button>
             </Link>
