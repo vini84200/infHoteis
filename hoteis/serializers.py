@@ -34,8 +34,9 @@ class HotelSerializer(serializers.ModelSerializer):
 
 
 class ReservaSerializer(serializers.ModelSerializer):
-    quarto = QuartoSerializer()
+    # quarto = QuartoSerializer(read_only=True)
 
     class Meta:
         model = Reserva
-        fields = ['__all__']
+        fields = ['id', 'quarto', 'cliente', 'data_inicio', 'data_fim', 'hospedes', 'preco', 'pago', 'checkin',
+                  'checkout', 'cancelada']
