@@ -48,7 +48,11 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'hoteis',
-    'guardian'
+    'guardian',
+    "django_meili",
+    "django_filters",
+    "crispy_forms",
+    "crispy_bootstrap5",
 ]
 
 MIDDLEWARE = [
@@ -145,6 +149,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ]
 }
 
 SIMPLE_JWT = {
@@ -165,3 +172,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
     'guardian.backends.ObjectPermissionBackend',
 )
+
+MEILISEARCH = {
+    "HOST": "localhost",
+    "PORT": 7700,
+    "HTTPS": False,
+    "MASTER_KEY": "masterKey",
+    "SYNC": False,
+}
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

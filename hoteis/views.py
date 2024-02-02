@@ -1,9 +1,13 @@
 import datetime
+from logging import info, warning
 
+import django_filters
 from django.shortcuts import render
+from django_filters import CharFilter
 from rest_framework import viewsets, status
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
+from rest_framework.filters import SearchFilter
 
 from hoteis.models import Hotel, Reserva, Quarto
 from hoteis.serializers import HotelSerializer, ReservaSerializer
@@ -14,11 +18,33 @@ class ReadOnly(BasePermission):
         return request.method in SAFE_METHODS
 
 
+# class HotelSearchFilterA(SearchFilter):
+#     search_param = 'nome'
+#
+#     def filter_queryset(self, request, queryset, view):
+#         # warning('search ', request.query_params.get(self.search_param))
+#         return Hotel.meilisearch.search(request.query_params.get(self.search_param))
+
+
+# class HotelSearchFilterB(django_filters.FilterSet):
+#     search = CharFilter(method='my_search')
+#
+#     class Meta:
+#         model = Hotel
+#         fields = ('nome',)
+#
+#     def my_search(self, queryset, name, value):
+#         info('search ', value[0])
+#         return queryset.meilisearch.search(value)
+
+
 class HotelViewSet(viewsets.ModelViewSet):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
-    authentication_classes = []
-    permission_classes = [ReadOnly]
+    # authentication_classes = []
+    # permission_classes = [ReadOnly]
+    # filter_backends = [HotelSearchFilterA, ]
+    # search_fields = ['nome']
 
 
 class ReservaPermission(BasePermission):
@@ -87,4 +113,3 @@ class ReservaViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Reserva.objects.filter(cliente=self.request.user)
-

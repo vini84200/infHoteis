@@ -2,17 +2,21 @@ import datetime
 
 from django.contrib.auth.models import User
 from django.db import models
+from django_meili.models import IndexMixin
 
 
 # Create your models here.
 
-class Hotel(models.Model):
+class Hotel(IndexMixin, models.Model):
     nome = models.CharField(max_length=120)
     descricao = models.CharField(max_length=1024)
     endereco = models.CharField(max_length=1024)
     # TODO: FOTO
     # TODO: Posicao no mapa
     avaliacao = models.FloatField()
+
+    displayed_fields = ['nome', 'descricao', 'endereco', 'avaliacao', 'id']
+    searchable_fields = ['nome', 'descricao', 'endereco', 'avaliacao']
 
     def __str__(self):
         return self.nome
