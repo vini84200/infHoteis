@@ -1,0 +1,36 @@
+.pageStyle {
+  background-color: #000000;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+  font-family: 'montserrat';
+}
+.inputStyle::placeholder {
+  color: rgb(106, 99, 99);
+}
+.inputStyle:focus {
+  background-color: #353935; /* Defina a cor desejada para o estado de foco */
+}
+
+.inputStyle {
+  background-color: #353935;
+  border-color: #353935;
+  color: rgb(255, 255, 255);
+  width: 80%;
+}
+.columns {
+  margin: 10%
+}
+
+.imageBorder {
+  background-color: #353935;
+  height: 600px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  border-radius: 10%;
+}
+.imageSize {
+  border-radius: 10%;
+}
+
