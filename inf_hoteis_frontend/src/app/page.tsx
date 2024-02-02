@@ -6,7 +6,7 @@ import {Button, InputNumber, Spin} from "antd";
 import Link from "next/link";
 import styles from "@styles/home.module.css";
 
-import { Categorias, Local, NroHospedes, PeriodoDatas } from '@/components/Inputs';
+import { List, NumberInput, PeriodoDatas } from '@/components/Inputs';
 
 async function logout() {
   localStorage.removeItem('token')
@@ -55,13 +55,43 @@ export default function Home() {
         {/* transformar em form dps */}
         <div className={styles.findHotelContainer}>
           <div className={styles.field}>
-            <Local onChange={onChange} onSearch={onSearch}/>
+            <List label={"Localização"} 
+            options={[
+              {
+                value: 'rs-gravatai',
+                label: 'RS - Gravataí',
+              },
+              {
+                value: 'rs-portoalegre',
+                label: 'RS - Porto Alegre',
+              },
+              {
+                value: 'rs-cachoeirinha',
+                label: 'RS - Cachoeirinha',
+              },
+            ]} 
+            onChange={onChange} onSearch={onSearch}/>
           </div>
           <div className={styles.field}>
-            <NroHospedes value={value} setValue={setValue}/>
+            <NumberInput label={"Número de quartos"} value={value} setValue={setValue}/>
           </div>
           <div className={styles.field}>
-            <Categorias onChange={onChange} onSearch={onSearch}/>
+          <List label={"Tipo de quarto"} 
+            options={[
+              {
+                value: 'familia-premium',
+                label: 'Familia Premium',
+              },
+              {
+                value: 'familia',
+                label: 'Familia',
+              },
+              {
+                value: 'solteiro',
+                label: 'Solteiro',
+              },
+            ]} 
+            onChange={onChange} onSearch={onSearch}/>
           </div>
           <div className={styles.field}>
             <PeriodoDatas />

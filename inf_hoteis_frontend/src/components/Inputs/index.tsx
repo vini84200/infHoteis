@@ -2,7 +2,14 @@ import { InputNumber, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import styles from "./styles.module.css"
 
+type T = {
+  label: string;
+  value: string;
+}
+
 type Props = {
+  label: string;
+  options: Array<T>;
   onChange : any;
   onSearch : any;
 }
@@ -10,77 +17,34 @@ type Props = {
 const filterOption = (input: string, option?: { label: string; value: string }) =>
 (option?.label ?? '').toLowerCase().includes(input.toLowerCase());
 
-export function Local({onChange, onSearch}: Props) {
+export function List({options, label, onChange, onSearch}: Props) {
   return (
     <>
-      <div className={styles.name}>Cidade</div>
+      <div className={styles.name}>{label}</div>
       <Select
         style={{width: '100%'}}
         showSearch
-        placeholder="Selecione uma cidade"
+        placeholder={"Selecione uma opção"}
         optionFilterProp="children"
         onChange={onChange}
         onSearch={onSearch}
         filterOption={filterOption}
-        options={[
-          {
-            value: 'rs-gravatai',
-            label: 'RS - Gravataí',
-          },
-          {
-            value: 'rs-portoalegre',
-            label: 'RS - Porto Alegre',
-          },
-          {
-            value: 'rs-cachoeirinha',
-            label: 'RS - Cachoeirinha',
-          },
-        ]}
+        options={options}
       />
     </>
   )
 }
 
-type NroHospedesProps = {
+type NumberProps = {
+  label : string;
   value : string | number | null;
   setValue : any;
 }
-export function NroHospedes ({value, setValue} : NroHospedesProps){
+export function NumberInput ({label, value, setValue} : NumberProps){
   return(
     <>
-      <div className={styles.name}>N° de hospedes</div>
+      <div className={styles.name}>{label}</div>
       <div className={styles.input}><InputNumber style={{width: '100%'}} min={1} max={6} value={value} onChange={setValue} /></div>
-    </>
-  )
-}
-
-export function Categorias ({onChange, onSearch}: Props){
-  return(
-    <>
-      <div className={styles.name}>Tipo de quarto</div>
-      <Select
-        style={{width: '100%'}}
-        showSearch
-        placeholder="Selecione um tipo de quarto"
-        optionFilterProp="children"
-        onChange={onChange}
-        onSearch={onSearch}
-        filterOption={filterOption}
-        options={[
-          {
-            value: 'familia-premium',
-            label: 'Familia Premium',
-          },
-          {
-            value: 'familia',
-            label: 'Familia',
-          },
-          {
-            value: 'solteiro',
-            label: 'Solteiro',
-          },
-        ]}
-      />
     </>
   )
 }
