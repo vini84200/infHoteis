@@ -4,21 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0a755b1-3843-46a0-9b67-ae75998ad521" name="END-23 Preparar deploy" comment="END-23 Preparar deploy">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
+    <list default="true" id="408a0d65-3d2a-4d61-a54d-26262d9c81df" name="END-26 Criar modelo Reserva" comment="END-26 Criar modelo Reserva">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infHoteis/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/infHoteis/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-    </list>
-    <list id="6e8ba5cf-0c30-484d-ac23-7bd007341f24" name="Changes" comment="END-18 Modelo Hotel">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/infHoteis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/infHoteis.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
-    <list id="71138e97-1adf-4a33-b665-fa862574874a" name="END-18 Modelo Hotel" comment="END-18 Modelo Hotel" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,10 +19,17 @@
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="END-23" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -41,26 +40,6 @@
         <option value="master" />
       </list>
     </option>
-  </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/.idea/workspace.xml">
-      <ranges>
-        <range start1="6" end1="14" start2="6" end2="10" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="16" end1="27" start2="12" end2="19" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="28" end1="28" start2="20" end2="21" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="37" end1="37" start2="30" end2="35" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="38" end1="38" start2="36" end2="63" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="58" end1="59" start2="83" end2="84" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="65" end1="65" start2="90" end2="91" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="98" end1="99" start2="124" end2="125" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="104" end1="105" start2="130" end2="132" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="109" end1="110" start2="136" end2="137" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="112" end1="113" start2="139" end2="143" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="122" end1="124" start2="152" end2="199" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="127" end1="127" start2="202" end2="219" changelist="f0a755b1-3843-46a0-9b67-ae75998ad521" />
-        <range start1="130" end1="131" start2="222" end2="237" changelist="6e8ba5cf-0c30-484d-ac23-7bd007341f24" />
-      </ranges>
-    </file>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -81,7 +60,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "END-26",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -122,7 +101,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-7a29c1521ef0-c986f194a52a-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.11799.298" />
+        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
       </set>
     </attachedChunks>
   </component>
@@ -130,7 +109,7 @@
   <component name="TaskManager">
     <task id="Default" summary="Default task">
       <branch name="master" repository="$PROJECT_DIR$" />
-      <changelist id="6e8ba5cf-0c30-484d-ac23-7bd007341f24" name="Changes" comment="" />
+      <changelist id="" name="Changes" comment="" />
       <created>1702251632604</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -161,7 +140,7 @@
     <task id="END-18" summary="Modelo Hotel">
       <branch name="master" repository="$PROJECT_DIR$" original="true" />
       <branch name="END-18" repository="$PROJECT_DIR$" />
-      <changelist id="71138e97-1adf-4a33-b665-fa862574874a" name="END-18 Modelo Hotel" comment="" />
+      <changelist id="" name="END-18 Modelo Hotel" comment="" />
       <created>1702862647508</created>
       <option name="issue" value="true" />
       <url>https://vini84200.atlassian.net/browse/END-18</url>
@@ -172,20 +151,46 @@
       <workItem from="1702863042293" duration="4866000" />
       <workItem from="1702912079024" duration="656000" />
     </task>
-    <task active="true" id="END-23" summary="Preparar deploy">
+    <task id="END-23" summary="Preparar deploy">
       <branch name="master" repository="$PROJECT_DIR$" original="true" />
       <branch name="END-23" repository="$PROJECT_DIR$" />
-      <changelist id="f0a755b1-3843-46a0-9b67-ae75998ad521" name="END-23 Preparar deploy" comment="" />
+      <changelist id="" name="END-23 Preparar deploy" comment="" />
       <created>1702912700815</created>
       <option name="issue" value="true" />
       <url>https://vini84200.atlassian.net/browse/END-23</url>
       <option name="number" value="23" />
       <option name="presentableId" value="END-23" />
       <option name="project" value="END" />
-      <updated>1702913900857</updated>
-      <workItem from="1702912753934" duration="3763000" />
+      <updated>1706465984402</updated>
+      <workItem from="1702912753934" duration="7859000" />
+      <workItem from="1703248308613" duration="101000" />
+      <workItem from="1703252477784" duration="606000" />
+      <workItem from="1705937990797" duration="607000" />
+      <workItem from="1706381103980" duration="603000" />
+      <workItem from="1706443145277" duration="5324000" />
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Listar hoteis">
+      <option name="closed" value="true" />
+      <created>1706465652711</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1706465652711</updated>
+    </task>
+    <task active="true" id="END-26" summary="Criar modelo Reserva">
+      <branch name="master" repository="$PROJECT_DIR$" original="true" />
+      <branch name="END-26" repository="$PROJECT_DIR$" />
+      <changelist id="408a0d65-3d2a-4d61-a54d-26262d9c81df" name="END-26 Criar modelo Reserva" comment="" />
+      <created>1706464106962</created>
+      <option name="issue" value="true" />
+      <url>https://vini84200.atlassian.net/browse/END-26</url>
+      <option name="number" value="26" />
+      <option name="presentableId" value="END-26" />
+      <option name="project" value="END" />
+      <updated>1706466673271</updated>
+      <workItem from="1706465984587" duration="757000" />
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers>
       <JIRA url="https://vini84200.atlassian.net">
         <option name="apiType" value="REST_2_0" />
@@ -220,6 +225,22 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Created Next App" />
-    <option name="LAST_COMMIT_MESSAGE" value="Created Next App" />
+    <MESSAGE value="Created Requirements.txt" />
+    <MESSAGE value="END-18 Modelo Hotel" />
+    <MESSAGE value="END-23 Preparar deploy" />
+    <MESSAGE value="Listar hoteis" />
+    <MESSAGE value="END-26 Criar modelo Reserva" />
+    <option name="LAST_COMMIT_MESSAGE" value="END-26 Criar modelo Reserva" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

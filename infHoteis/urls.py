@@ -22,4 +22,5 @@ urlpatterns = [
     path('auth/', include('djoser.urls.jwt')),
     path('auth/', include('djoser.urls')),
     path('api-auth/', include('rest_framework.urls')),
+    path('api/', include('hoteis.urls')),
 ]
