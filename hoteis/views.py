@@ -5,7 +5,7 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
 
-from hoteis.models import Hotel, Reserva, Quarto
+from hoteis.models import Hotel, Reserva, Quarto, CategoriaQuarto
 from hoteis.serializers import HotelSerializer, CategoriaSerializer, ReservaSerializer
 
 class ReadOnly(BasePermission):
@@ -25,7 +25,7 @@ class CategoriaQuartoViewSet(viewsets.ModelViewSet):
     permission_classes = [ReadOnly]
 
     def list(self, request):
-        all_rooms = Quarto.objects.filter(hotel=request['hotel'])
+        all_rooms = Quarto.objects.filter(hotel=request['id_hotel'])
         booked = Reserva.objects.filter(data_inicio__lte=request['data_inicio'], data_fim__gte=request['data_fim'], cancelada=False).select_related('quarto').filter(hotel=request['hotel'])
         intersection = []
 
