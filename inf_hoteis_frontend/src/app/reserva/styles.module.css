@@ -1,0 +1,58 @@
+.container{
+    display: flex;
+    gap: 20px;
+}
+
+.container > *{
+    width: 100%;
+}
+.container p {
+    font-size: 16px; /* Defina o tamanho da fonte para os elementos <p> dentro da div "infos" */
+    margin: 1px;
+  }
+
+.columns{
+    margin: 5%;
+}
+
+.passos{
+    margin-top: 2%;
+}
+
+.inputStyle {
+    background-color: #ffffff;
+    border-color: #b4b3b3;
+    color: rgb(0, 0, 0);
+    width: 80%;
+    margin-top: 3px;
+    margin-bottom: 3px;
+  }
+.infoHotel{
+    background-color: #ffffff;
+    height: 480px;
+    width: 400px;
+    border-radius: 5%;
+    display: flex;
+    
+}
+.borda{
+    margin: 10px;
+}
+.imagem{
+    text-align: center;
+    margin: 20px;
+    margin-top: 5%;
+}
+.infos{
+    margin: 20px;
+}
+
+.botao{
+    background-color: rgb(255, 0, 0);
+    width: 20%;
+    height: 50px;
+    margin-top: 20px;
+}
+.linha{
+    margin-top: 10px;
+}
