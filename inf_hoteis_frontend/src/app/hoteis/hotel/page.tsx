@@ -1,13 +1,13 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from "./styles.module.css";
 import { Button, Carousel, Image, InputNumber, Rate } from 'antd';
-import { List, NumberInput } from '@/components/Inputs';
+import { List, NumberInput, PeriodoDatas } from '@/components/Inputs';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 
 type Inputs = {
-  example: string
-  exampleRequired: string
+  example: string;
+  exampleRequired: string;
 }
 
 export default function Hotel() {
@@ -20,9 +20,10 @@ export default function Hotel() {
   } = useForm<Inputs>()
   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
 
-  const [reservation, setReservation] = useState();
-
+  
   const tipos = ["Familia Premium", "Familia", "Solteiro"]
+
+  const categoriesList = [{}];
   return (
     <div className={styles.container}>
       <div className={styles.imagesContainer}>
@@ -119,13 +120,14 @@ export default function Hotel() {
         </div>
         <div className={styles.bookingInfo}>
           <h1>INFORMAÇÕES DA RESERVA</h1>
+          <h3 className={styles.subtitle}>Selecione a quantiade de quartos para cada categoria</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             {
               <div className={styles.roomsSet}>
                 {tipos.map((item, i)=>{
                   return (
                     <div key={i} className={styles.roomSelect}>
-                      <span className={styles.label}>Selecione a quantiade de quartos para o tipo {item}</span>
+                      <span className={styles.label}>{item}:</span>
                       <div className={styles.roomTypeSelect}>
                         <Controller
                             name={item}
@@ -135,7 +137,7 @@ export default function Hotel() {
                                 controls={false}
                                 bordered={false}
                                 {...field}
-                                placeholder={""}
+                                placeholder={"0"}
                                 className={styles.field}
                               />
                             )}
@@ -146,6 +148,15 @@ export default function Hotel() {
                 })}
               </div>
             }
+            <div className={styles.date}>
+              <Controller
+                name={"data"}
+                control={control}
+                render={({ field }) => (
+                  <PeriodoDatas label={"Escolha a data da sua viagem"} fieldProps={...field} />
+                )}
+              />
+            </div>
             <Button type="primary" htmlType="submit" className={styles.confirmButton}>RESERVAR AGORA</Button>
           </form>
         </div>
