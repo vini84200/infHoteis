@@ -39,3 +39,17 @@ class Quarto(models.Model):
 
     def __str__(self):
         return self.numero.__str__()
+
+class EspacoHotel(models.Model):
+    nome = models.CharField(max_length=120,null=False)
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, null=False)
+    autorizacao = models.BooleanField(default=False)
+    def __str__(self):
+        return self.nome
+
+class EspacoHotelReserva(models.Model):
+    idEspaco = models.ForeignKey(EspacoHotel, on_delete=models.CASCADE, null=False)
+    dataInicial = models.DateTimeField(null=False)
+    duracao = models.DurationField(null=False)
+    def __str__(self):
+        return self.idEspaco + self.dataInicial
