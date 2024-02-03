@@ -25,13 +25,14 @@ class CategoriaQuartoViewSet(viewsets.ModelViewSet):
     permission_classes = [ReadOnly]
 
     def list(self, request):
-        queryset = self.queryset
-        booked = Reserva.objects.filter(data_inicio__lte=request.inicio, data_fim__gte=request.fim).select_related('quarto').filter(hotel=request.hotel).values('categoria').distinct
+        all_rooms = Quarto.objects.filter(hotel=request['hotel'])
+        booked = Reserva.objects.filter(data_inicio__lte=request['data_inicio'], data_fim__gte=request['data_fim'], cancelada=False).select_related('quarto').filter(hotel=request['hotel'])
         intersection = []
 
-        for categoria in queryset:
-            if not categoria in booked:
-                intersection.append(categoria)
+        for quarto in all_rooms:
+            for reservado in booked:
+                if quarto != reservado:
+                    intersection.append(quarto.categoria)
                 
         serializer = CategoriaSerializer(intersection, many=True)
         return Response(serializer.data)
