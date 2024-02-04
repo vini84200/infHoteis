@@ -9,8 +9,10 @@ from django.db import models
 class Hotel(models.Model):
     nome = models.CharField(max_length=120)
     descricao = models.CharField(max_length=1024)
-    endereco = models.CharField(max_length=1024)
-    # TODO: FOTO
+    cidade = models.CharField(max_length=1024)
+    estado = models.CharField(max_length=1024)
+    rua = models.CharField(max_length=1024)
+    imagem = models.ImageField(upload_to='hoteis', null=True)
     # TODO: Posicao no mapa
     avaliacao = models.FloatField()
 
@@ -30,6 +32,7 @@ class CategoriaQuarto(models.Model):
     descricao = models.CharField(max_length=1024)
     beneficios = models.ManyToManyField(Beneficio)
     preco = models.DecimalField(decimal_places=2, max_digits=10)
+    imagem = models.ImageField(upload_to='categorias', null=True)
     hospedes = models.IntegerField()
 
     def __str__(self):

@@ -14,7 +14,7 @@ class CategoriaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CategoriaQuarto
-        fields = ['nome', 'descricao', 'beneficios', 'preco', 'hospedes']
+        fields = ['nome', 'descricao', 'beneficios', 'preco', 'hospedes', 'imagem']
 
 
 class QuartoSerializer(serializers.ModelSerializer):
@@ -30,7 +30,7 @@ class HotelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Hotel
-        fields = ['id', 'nome', 'descricao', 'endereco', 'avaliacao', 'quarto_set']
+        fields = ['id', 'nome', 'descricao', 'estado', 'cidade', 'rua', 'imagem', 'avaliacao', 'quarto_set']
 
 
 class ReservaSerializer(serializers.ModelSerializer):
