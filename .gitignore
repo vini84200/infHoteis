@@ -1,16 +1,3 @@
-/db.sqlite3
-**.env
-.env
-/.env
-<<<<<<< HEAD
-*__pycache__
-environment/
-
-=======
-
-.idea/
-.idea
-
 # Created by https://www.toptal.com/developers/gitignore/api/python,django
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django
 
@@ -46,6 +33,7 @@ eggs/
 .eggs/
 lib/
 lib64/
+environment/
 parts/
 sdist/
 var/
@@ -279,4 +267,3 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/python,django
 .idea/
 /infHoteis/__pycache__
->>>>>>> origin/master

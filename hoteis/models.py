@@ -54,10 +54,13 @@ class EspacoHotel(models.Model):
 
 class EspacoHotelReserva(models.Model):
     idEspaco = models.ForeignKey(EspacoHotel, on_delete=models.CASCADE, null=False)
-    dataInicial = models.DateTimeField(null=False)
-    duracao = models.DurationField(null=False)
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    data_inicio = models.DateTimeField(null=False)
+    data_fim = models.DateTimeField(null=False)
+    autorizada = models.BooleanField(default=False)
     def __str__(self):
-        return self.idEspaco + self.dataInicial
+        isAuth =  "Autorizada" if self.autorizada else "Não autorizada!"
+        return 'Reserva ' + isAuth + ' : ' + self.idEspaco.nome  + ' de ' + str(self.data_inicio) + ' até ' + str(self.data_fim)
 
 class Reserva(models.Model):
     quarto = models.ForeignKey(Quarto, on_delete=models.CASCADE, null=False)
