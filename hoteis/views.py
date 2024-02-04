@@ -2,11 +2,12 @@ import datetime
 
 from django.shortcuts import render
 from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
 
-from hoteis.models import Hotel, Reserva, Quarto
-from hoteis.serializers import HotelSerializer, ReservaSerializer, ReservaRequestSerializer
+from hoteis.models import Hotel, Reserva, Quarto, CategoriaQuarto
+from hoteis.serializers import HotelSerializer, ReservaSerializer, ReservaRequestSerializer, CategoriaSerializer
 
 
 class ReadOnly(BasePermission):
@@ -19,6 +20,13 @@ class HotelViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = HotelSerializer
     authentication_classes = []
 
+    @action(detail=True, methods=['get'])
+    def tipos(self, request, pk=None, *args, **kwargs):
+        hotel = self.get_object()
+        tipos = CategoriaQuarto.objects.filter(quarto__hotel=hotel).distinct()
+
+        return Response(CategoriaSerializer(tipos, many=True, context={'request': request}).data)
+
 
 class ReservaPermission(BasePermission):
     def has_permission(self, request, view):
@@ -30,7 +38,6 @@ class ReservaPermission(BasePermission):
         if request.method == 'PUT':
             return False
         return obj.cliente == request.user or request.user.is_staff
-
 
 
 class ReservaViewSet(viewsets.ModelViewSet):

@@ -17,7 +17,7 @@ class CategoriaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CategoriaQuarto
-        fields = ['nome', 'descricao', 'beneficios', 'preco', 'hospedes', 'imagem']
+        fields = ['nome', 'descricao', 'beneficios', 'preco', 'hospedes', 'imagem', 'id']
 
 
 class QuartoSerializer(serializers.ModelSerializer):
@@ -29,7 +29,7 @@ class QuartoSerializer(serializers.ModelSerializer):
 
 
 class HotelSerializer(serializers.ModelSerializer):
-    quarto_set = serializers.SlugRelatedField(many=True, read_only=True, slug_field='numero')
+    quarto_set = QuartoSerializer(many=True)
 
     class Meta:
         model = Hotel
