@@ -1,0 +1,119 @@
+.container{
+    position: relative;
+    padding: 40px 20px 20px 20px;
+    display: flex;
+    min-height: var(--view-height);
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.bgImage{
+    background-color: var(--light-gray);
+    height: 200px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.profileContainer{
+    width: 80%;
+    min-width: 320px;
+    background: white;
+    border-radius: var(--default-border-radius);
+    padding: 20px;
+    z-index: 1;
+    box-shadow: 0px 0px 20px calc(0.75*var(--default-box-shadow-color));
+}
+
+.header{
+    border-bottom: 1px solid rgba(0,0,0,.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    padding: 0 20px;
+}
+
+.field{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 20px;
+    font-size: var(--text-font-size);
+    border-bottom: 1px solid var(--light-gray);
+    padding: 20px 15px;
+}
+
+.field > span{
+    font-weight: bold;
+}
+
+.reservationsContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.reservation{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    flex-direction: row;
+    height: 150px;
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.925);
+    box-shadow: 0 4px 30px calc(0.75*var(--default-box-shadow-color));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--red-50);
+    border-radius: var(--default-border-radius);
+    overflow: hidden;
+    padding-right: 30px;
+}
+
+.reservationInfo{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.hotelImage{
+    height: 100%;
+    width: 150px;
+    text-align: center;
+    background-color: aqua;
+}
+
+.hotelImage .image{
+    object-fit: cover;
+    object-position: center;
+}
+
+@media only screen and (max-width: 767px) {
+    .reservation{
+        flex-direction: column;
+        height: auto;
+        padding: 20px 10px;
+    }
+
+    .hotelImage{
+        height: 100%;
+        width: 80%;
+        border-radius: var(--default-border-radius);
+        overflow: hidden;
+    }
+
+    .reservationInfo{
+        gap: 20px;
+        flex-direction: column;
+    }
+}

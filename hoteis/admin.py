@@ -33,5 +33,5 @@ class ReservaAdmin(admin.ModelAdmin):
 
 @admin.register(Reserva)
 class ReservaAdmin(admin.ModelAdmin):
-    list_display = ['cliente', 'quarto', 'data_inicio', 'data_fim', 'hospedes', 'preco', 'pago', 'checkin', 'checkout',
+    list_display = ['cliente', 'quarto', 'data_inicio', 'data_fim', 'preco', 'pago', 'checkin', 'checkout',
                     'cancelada']

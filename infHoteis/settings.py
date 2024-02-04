@@ -165,3 +165,5 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
     'guardian.backends.ObjectPermissionBackend',
 )
+MEDIA_URL = '/mediaaa/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

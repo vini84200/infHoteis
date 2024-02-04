@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe8b0da0-ceca-4264-bbe0-ec8808091d7b" name="END-51 Pesquisa de hoteis" comment="Sincronizar hoteis e criar dados aleatorios" />
-    <list id="408a0d65-3d2a-4d61-a54d-26262d9c81df" name="END-26 Criar modelo Reserva" comment="END-26 Criar modelo Reserva">
+    <list default="true" id="c1cfecae-ccc4-4bd5-8742-756b468e76e8" name="Changes" comment="Fazer reservas em grupos">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hoteis/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/hoteis/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hoteis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/hoteis/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/hoteis/[hotelId]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/app/hoteis/[hotelId]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/src/components/Inputs/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/src/components/Inputs/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +43,8 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/.local/lib/python3.11/site-packages/rest_framework/generics.py" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/hoteis/serializers.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/infHoteis/settings.py" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/requirements.txt" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -75,16 +81,21 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "END-51",
+    "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.maddyhome.idea.vim.ui.VimEmulationConfigurable",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "tasks.close.task.update.state.enabled": "true",
     "tasks.open.task.update.state.enabled": "true",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "directory"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
@@ -155,29 +166,31 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
+        <option value="bundled-python-sdk-5a2391486177-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13763.11" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task id="Default" summary="Default task">
+    <task active="true" id="Default" summary="Default task">
       <branch name="master" repository="$PROJECT_DIR$" />
+      <changelist id="c1cfecae-ccc4-4bd5-8742-756b468e76e8" name="Changes" comment="" />
       <created>1702251632604</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1702863042118</updated>
+      <updated>1707051422138</updated>
       <workItem from="1702251645448" duration="2689000" />
       <workItem from="1702256647785" duration="29000" />
       <workItem from="1702308517836" duration="569000" />
       <workItem from="1702318148924" duration="6000" />
       <workItem from="1702774567422" duration="1035000" />
       <workItem from="1702862320784" duration="684000" />
+      <workItem from="1707051422544" duration="7522000" />
     </task>
     <task id="END-18" summary="Modelo Hotel">
       <branch name="master" repository="$PROJECT_DIR$" original="true" />
       <branch name="END-18" repository="$PROJECT_DIR$" />
-      <changelist id="408a0d65-3d2a-4d61-a54d-26262d9c81df" name="END-26 Criar modelo Reserva" comment="END-26 Criar modelo Reserva" />
+      <changelist id="" name="END-26 Criar modelo Reserva" comment="END-26 Criar modelo Reserva" />
       <created>1702862647508</created>
       <option name="issue" value="true" />
       <url>https://vini84200.atlassian.net/browse/END-18</url>
@@ -266,7 +279,7 @@
     <task active="true" id="END-51" summary="Pesquisa de hoteis">
       <branch name="master" repository="$PROJECT_DIR$" original="true" />
       <branch name="END-51" repository="$PROJECT_DIR$" />
-      <changelist id="fe8b0da0-ceca-4264-bbe0-ec8808091d7b" name="END-51 Pesquisa de hoteis" comment="" />
+      <changelist id="" name="END-51 Pesquisa de hoteis" comment="" />
       <created>1706530566483</created>
       <option name="issue" value="true" />
       <url>https://vini84200.atlassian.net/browse/END-51</url>
@@ -281,6 +294,7 @@
       <workItem from="1706886274219" duration="382000" />
       <workItem from="1706886695490" duration="3295000" />
       <workItem from="1706890622490" duration="6819000" />
+      <workItem from="1707010241008" duration="2495000" />
     </task>
     <task id="LOCAL-00005" summary="Sincronizar hoteis e criar dados aleatorios">
       <option name="closed" value="true" />
@@ -290,7 +304,23 @@
       <option name="project" value="LOCAL" />
       <updated>1706911298580</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Fazer reservas em grupos">
+      <option name="closed" value="true" />
+      <created>1707055961082</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1707055961082</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fazer reservas em grupos">
+      <option name="closed" value="true" />
+      <created>1707055968852</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1707055968852</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers>
       <JIRA url="https://vini84200.atlassian.net">
         <option name="apiType" value="REST_2_0" />
@@ -336,18 +366,9 @@
     <MESSAGE value="END-26 Criar modelo Reserva" />
     <MESSAGE value=" Migration reserva" />
     <MESSAGE value="END-28 API da reserva - Endpoint" />
+    <MESSAGE value="Mudar serializers" />
     <MESSAGE value="Sincronizar hoteis e criar dados aleatorios" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sincronizar hoteis e criar dados aleatorios" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <default-breakpoints>
-        <breakpoint type="python-exception">
-          <properties notifyOnTerminate="true" exception="BaseException">
-            <option name="notifyOnTerminate" value="true" />
-          </properties>
-        </breakpoint>
-      </default-breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Fazer reservas em grupos" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fazer reservas em grupos" />
   </component>
 </project>
