@@ -10,7 +10,6 @@ from rest_framework.decorators import action
 from hoteis.models import Hotel, Reserva, Quarto, CategoriaQuarto
 from hoteis.serializers import HotelSerializer, ReservaSerializer, ReservaRequestSerializer, CategoriaSerializer, QuartoSerializer
 
-
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         return request.method in SAFE_METHODS
@@ -34,9 +33,21 @@ class CategoriaQuartoViewSet(viewsets.ModelViewSet):
     permission_classes = [ReadOnly]
 
     def list(self, request, *args, **kwargs):        
+        if datetime.date.today() > datetime.datetime.strptime(self.kwargs['data_inicio'], '%Y-%m-%d').date():
+            return Response({'detail': 'Data de início no passado'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verificar se o fim é depois do início
+        if datetime.datetime.strptime(self.kwargs['data_inicio'], '%Y-%m-%d') > datetime.datetime.strptime(
+                self.kwargs['data_fim'], '%Y-%m-%d'):
+            return Response({'detail': 'Data de fim antes da data de início'}, status=status.HTTP_400_BAD_REQUEST)
+        
         quartos = Quarto.objects.all().filter(hotel=self.kwargs['id_hotel'])
         quartos_ids = quartos.values_list('id', flat=True)
-        quartos_reservados_ids = Reserva.objects.filter(data_inicio__gte=self.kwargs['data_inicio'], data_fim__lte=self.kwargs['data_fim'], cancelada=False).values_list('quarto', flat=True)
+        quartos_reservados_ids = Reserva.objects.filter(data_inicio__lte=self.kwargs['data_fim'], data_fim__gte=self.kwargs['data_inicio'], cancelada=False).values_list('quarto', flat=True)
+        import sys
+        print(len(quartos_reservados_ids), sys.stderr)
+        print(self.kwargs['data_inicio'], sys.stderr)
+        print(Reserva.objects.filter(data_fim__lte=self.kwargs['data_fim']), sys.stderr)
         quartos_liberados = list(set(quartos_ids).difference(quartos_reservados_ids))
 
         categorias = []
