@@ -4,10 +4,15 @@ import Image from 'next/image';
 import logo from "@assets/logo-icon.png";
 import Link from 'next/link';
 import styles from './style.module.css';
-import {Dropdown, MenuProps, message} from 'antd';
-import {MenuOutlined, UserOutlined} from '@ant-design/icons'
-import {useQuery} from '@tanstack/react-query';
+import {Button, Dropdown, MenuProps, message} from 'antd';
+import {MenuOutlined, UserOutlined, LogoutOutlined} from '@ant-design/icons'
+import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import getMe from "@/apiOperations/users/getMe";
+
+async function logout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('refresh_token')
+}
 
 const LogoComponent = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -19,11 +24,21 @@ const LogoComponent = () => {
     staleTime: 1000 * 60 * 5, // 5 minutes
   })
 
-  // const isLoggedin = me.data?.logged_in ?? false;
-
+  const isLoggedin = me.data?.logged_in ?? false;
+  console.log(me)
   if (me.isError) {
     messageApi.error("Erro ao buscar usuário logado").then()
   }
+
+  const queryClient = useQueryClient()
+  const logoutMutation = useMutation({
+        mutationKey: ['logout'],
+        mutationFn: () => logout(),
+        onSuccess: () => {
+        queryClient.invalidateQueries({
+            type: 'all'
+        })},
+    })
 
   const items: MenuProps['items'] = [
     {
@@ -112,19 +127,34 @@ const LogoComponent = () => {
           <Link className={styles.link} href={"/login"}>História</Link>
         </div>
         <div className={styles.userContainer}>
-          <div className={styles.accountContainer}>
-            <Link className={styles.loginLink} href={"/login"}>Faça login</Link>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 5,
-              fontSize: 'clamp(.7rem, 1vw, .8rem)'
-            }}>
-              ou
-              <Link className={styles.registerLink} href={"/register"}>cadastre-se</Link>
+          { !isLoggedin ? 
+            <div className={styles.accountContainer}>
+                <Link className={styles.loginLink} href={"/login"}>Faça login</Link>
+                <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 5,
+                fontSize: 'clamp(.7rem, 1vw, .8rem)'
+                }}>
+                ou
+                <Link className={styles.registerLink} href={"/register"}>cadastre-se</Link>
+                </div>
             </div>
-          </div>
+            :
+            <div className={styles.accountContainer}>
+                <Link className={styles.loginLink} href={"/perfil"}>{me.data?.username}</Link>
+                <div style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: 5,
+                fontSize: 'clamp(.9rem, 1.2vw, 1rem)'
+                }}>
+                    <Button onClick={()=>logoutMutation.mutate()} className={styles.registerLink}>Sair <LogoutOutlined /></Button>
+                </div>
+            </div>
+          }
           <UserOutlined style={{fontSize: 'calc(var(--header-height)*0.5)', color: 'black'}}/>
         </div>
         <div className={styles.mobileContainer}>
