@@ -5,17 +5,20 @@ import {Button, Image, InputNumber, message, Modal, Rate} from 'antd';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {useQuery} from "@tanstack/react-query";
 import api from "@/apiOperations/api";
+import { PeriodoDatas } from '@/components/Inputs';
 
 type Inputs = {
   [key: string]: number;
 }
 
-interface Hotel {
-  id: number;
+export interface Hotel {
   nome: string;
-  endereco: string;
+  estado: string;
+  cidade: string;
+  rua: string;
   avaliacao: number;
-  descricao: string;
+  id: number;
+  imagem: string;
 }
 
 export default function Hotel({params}: { params: { hotelId: string } }) {
@@ -43,7 +46,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
   const [messageApi, contextHolder] = message.useMessage();
 
 
-  const {nome, endereco, avaliacao, descricao} = hotelQuery.data ?? {nome: "", endereco: "", avaliacao: 0};
+  const {nome, cidade, estado, imagem, avaliacao, rua, descricao} = hotelQuery.data ?? {nome: "", endereco: "", avaliacao: 0};
 
   if (hotelQuery.isLoading) {
     return <div>Carregando...</div>
@@ -74,10 +77,14 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
             alt="Imagem do hotel"
             width={'100%'}
             height={'100%'}
-            src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?cs=srgb&dl=pexels-pixabay-258154.jpg&fm=jpg"
+            src={imagem}
           />
-          <div className={styles.location}>
-            <span style={{zIndex: 999}}>{nome}</span>
+          <div className={styles.locationContainer}>
+            <div className={styles.location} style={{zIndex: 999}}>
+              <span>{cidade} - {estado}</span>
+              <span>{nome}</span>
+              <span>{rua}</span>
+            </div>
           </div>
         </div>
 
@@ -85,7 +92,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
       <div className={styles.content}>
         <div className={styles.hotelInfo}>
           <div className={styles.description}>
-            <Rate allowHalf disabled style={{fontSize: 35, color: "var(--red)"}} defaultValue={5}/>
+            <Rate allowHalf disabled style={{fontSize: 35, color: "var(--red)"}} defaultValue={avaliacao}/>
             <p>
               {descricao}
             </p>
@@ -115,6 +122,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
                         onClick={() => {
                           Modal.info({
                             title: i,
+                            centered: true,
                             content: (
                               <div className={styles.modalContainer}>
                                 <div className={styles.bedrooms}>Qtde de camas: {"aqui"}</div>                     
@@ -151,33 +159,43 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
         </div>
         <div className={styles.bookingInfo}>
           <h1>INFORMAÇÕES DA RESERVA</h1>
+          <h3 className={styles.subtitle}>Selecione a quantiade de quartos para cada categoria</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             {
               <div className={styles.roomsSet}>
-                {tipos.map((item, i) => {
+                {tipos.map((item, i)=>{
                   return (
                     <div key={i} className={styles.roomSelect}>
-                      <span className={styles.label}>Selecione a quantiade de quartos para o tipo {item}</span>
+                      <span className={styles.label}>{item}:</span>
                       <div className={styles.roomTypeSelect}>
                         <Controller
-                          name={item}
-                          control={control}
-                          render={({field, fieldState}) => (
-                            <InputNumber
-                              controls={false}
-                              bordered={false}
-                              {...field}
-                              placeholder={""}
-                              className={styles.field}
-                            />
-                          )}
-                        />
+                            name={item}
+                            control={control}
+                            render={({ field, fieldState }) => (
+                              <InputNumber
+                                controls={false}
+                                bordered={false}
+                                {...field}
+                                placeholder={"0"}
+                                className={styles.field}
+                              />
+                            )}
+                          />
                       </div>
                     </div>
                   )
                 })}
               </div>
             }
+            <div className={styles.date}>
+              <Controller
+                name={"data"}
+                control={control}
+                render={({ field }) => (
+                  <PeriodoDatas label={"Escolha a data da sua viagem"} fieldProps={...field}/>
+                )}
+              />
+            </div>
             <Button type="primary" htmlType="submit" className={styles.confirmButton}>RESERVAR AGORA</Button>
           </form>
         </div>
