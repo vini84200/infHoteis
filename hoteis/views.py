@@ -1,6 +1,6 @@
 import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
@@ -20,21 +20,23 @@ class HotelViewSet(viewsets.ModelViewSet):
 
 class CategoriaQuartoViewSet(viewsets.ModelViewSet):
     queryset = CategoriaQuarto.objects.all()
-    serializer_class = CategoriaSerializer
+    serializer_class = [CategoriaSerializer]
     authentication_classes = []
     permission_classes = [ReadOnly]
 
-    def list(self, request):
-        all_rooms = Quarto.objects.filter(hotel=request['id_hotel'])
-        booked = Reserva.objects.filter(data_inicio__lte=request['data_inicio'], data_fim__gte=request['data_fim'], cancelada=False).select_related('quarto').filter(hotel=request['hotel'])
-        intersection = []
+    def list(self, request):        
+        quartos = Quarto.objects.all().filter(hotel=request.data['id_hotel'])
+        quartos_ids = quartos.values_list('id', flat=True)
+        quartos_reservados_ids = Reserva.objects.filter(data_inicio__gte=request.data['data_inicio'], data_fim__lte=request.data['data_fim'], cancelada=False).values_list('quarto', flat=True)
+        quartos_liberados = list(set(quartos_ids).difference(quartos_reservados_ids))
 
-        for quarto in all_rooms:
-            for reservado in booked:
-                if quarto != reservado:
-                    intersection.append(quarto.categoria)
-                
-        serializer = CategoriaSerializer(intersection, many=True)
+        categorias = []
+        for quarto in quartos:
+            if quarto.id in quartos_liberados:
+                categorias.append(quarto.categoria)
+        categorias = list(set(categorias))
+
+        serializer = CategoriaSerializer(categorias, many=True)
         return Response(serializer.data)
 
 class ReservaPermission(BasePermission):
