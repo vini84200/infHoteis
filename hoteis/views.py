@@ -4,9 +4,10 @@ from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from hoteis.models import Hotel, Reserva, Quarto
-from hoteis.serializers import HotelSerializer, ReservaSerializer
+from hoteis.serializers import HotelSerializer, ReservaSerializer, CategoriaSerializer, QuartoSerializer
 
 
 class ReadOnly(BasePermission):
@@ -20,7 +21,6 @@ class HotelViewSet(viewsets.ModelViewSet):
     authentication_classes = []
     permission_classes = [ReadOnly]
 
-
 class ReservaPermission(BasePermission):
     def has_permission(self, request, view):
         return request.user.is_authenticated
@@ -31,7 +31,12 @@ class ReservaPermission(BasePermission):
         if request.method == 'PUT':
             return False
         return obj.cliente == request.user or request.user.is_staff
-
+    
+class ReservaPermissionAll(BasePermission):
+    def has_permission(self, request, view):
+        return True
+    def has_object_permission(self, request, view, obj):
+        return True
 
 class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.all()
@@ -88,11 +93,21 @@ class ReservaViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Reserva.objects.filter(cliente=self.request.user)
     
-    def disponibilidade(self, request, *args, **kwargs):
-        reservas_anteriores = Reserva.objects.filter(data_inicio_lt=request['data_inicio'], data_fim_lt=['data_fim'], quarto=request['quarto'])
-        reservas_posteriores = Reserva.objects.filter(data_inicio_gt=request['data_inicio'], data_fim_gt=['data_fim'], quarto=request['quarto'])
+    @action(detail=True, methods=['get'])
+    def disponibilidade(self, request, pk):
+        data_inicio = request.query_params.get('data_inicio')
+        data_fim = request.query_params.get('data_fim')
+        categoria = request.query_params.get('categoria')
 
-        if (not reservas_anteriores) or (not reservas_posteriores):
-            return Response({'detail': 'O quarto não está disponível na data estipulada'}, status=204)
-        else:
-            return Response({'detail': 'O quarto está disponível'}, status=200)
+        quartos = Quarto.objects.all().filter(hotel=pk)
+        quartos_ids = quartos.values_list('id', flat=True)
+        quartos_reservados_ids = Reserva.objects.filter(data_inicio__gte=data_inicio, data_fim__lte=data_fim, cancelada=False).values_list('quarto', flat=True)
+        quartos_liberados = list(set(quartos_ids).difference(quartos_reservados_ids))
+
+        disponiveis = []
+        for quarto in quartos:
+            if quarto.pk in quartos_liberados and quarto.categoria.pk == int(categoria):
+                disponiveis.append(quarto)
+        
+        serializer = QuartoSerializer(disponiveis, many=True)
+        return Response(serializer.data)

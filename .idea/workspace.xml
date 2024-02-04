@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="408a0d65-3d2a-4d61-a54d-26262d9c81df" name="END-26 Criar modelo Reserva" comment="END-26 Criar modelo Reserva">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/infHoteis.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/infHoteis.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hoteis/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/hoteis/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +59,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "END-26",
+    "last_opened_file_path": "C:/Users/guirt/OneDrive/Documentos/infHoteis",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -109,7 +108,6 @@
   <component name="TaskManager">
     <task id="Default" summary="Default task">
       <branch name="master" repository="$PROJECT_DIR$" />
-      <changelist id="" name="Changes" comment="" />
       <created>1702251632604</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -140,7 +138,6 @@
     <task id="END-18" summary="Modelo Hotel">
       <branch name="master" repository="$PROJECT_DIR$" original="true" />
       <branch name="END-18" repository="$PROJECT_DIR$" />
-      <changelist id="" name="END-18 Modelo Hotel" comment="" />
       <created>1702862647508</created>
       <option name="issue" value="true" />
       <url>https://vini84200.atlassian.net/browse/END-18</url>
@@ -154,7 +151,6 @@
     <task id="END-23" summary="Preparar deploy">
       <branch name="master" repository="$PROJECT_DIR$" original="true" />
       <branch name="END-23" repository="$PROJECT_DIR$" />
-      <changelist id="" name="END-23 Preparar deploy" comment="" />
       <created>1702912700815</created>
       <option name="issue" value="true" />
       <url>https://vini84200.atlassian.net/browse/END-23</url>
@@ -215,6 +211,17 @@
               <option name="CUSTOM_BOOLEAN_PROPERTIES">
                 <map>
                   <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="END-31" />
+                      </list>
+                    </value>
+                  </entry>
                 </map>
               </option>
             </State>
