@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe8b0da0-ceca-4264-bbe0-ec8808091d7b" name="END-51 Pesquisa de hoteis" comment="Sincronizar hoteis e criar dados aleatorios" />
-    <list id="408a0d65-3d2a-4d61-a54d-26262d9c81df" name="END-26 Criar modelo Reserva" comment="END-26 Criar modelo Reserva">
+    <list default="true" id="fe8b0da0-ceca-4264-bbe0-ec8808091d7b" name="END-51 Pesquisa de hoteis" comment="Sincronizar hoteis e criar dados aleatorios">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hoteis/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/hoteis/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hoteis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/hoteis/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infHoteis/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/infHoteis/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infHoteis/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/infHoteis/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/inf_hoteis_frontend/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/inf_hoteis_frontend/pnpm-lock.yaml" afterDir="false" />
     </list>
+    <list id="408a0d65-3d2a-4d61-a54d-26262d9c81df" name="END-26 Criar modelo Reserva" comment="END-26 Criar modelo Reserva" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,7 +82,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "END-51",
+    "git-widget-placeholder": "master",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -155,7 +162,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
+        <option value="bundled-python-sdk-5a2391486177-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13763.11" />
       </set>
     </attachedChunks>
   </component>
@@ -281,6 +288,7 @@
       <workItem from="1706886274219" duration="382000" />
       <workItem from="1706886695490" duration="3295000" />
       <workItem from="1706890622490" duration="6819000" />
+      <workItem from="1707010241008" duration="2495000" />
     </task>
     <task id="LOCAL-00005" summary="Sincronizar hoteis e criar dados aleatorios">
       <option name="closed" value="true" />
