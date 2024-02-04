@@ -1,6 +1,6 @@
 import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import BasePermission, SAFE_METHODS
@@ -9,11 +9,9 @@ from rest_framework.response import Response
 from hoteis.models import Hotel, Reserva, Quarto, CategoriaQuarto, EspacoHotel, EspacoHotelReserva
 from hoteis.serializers import HotelSerializer, ReservaSerializer, ReservaRequestSerializer, CategoriaSerializer, EspacoHotelSerializer, EspacoHotelReservaSerializer
 
-
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         return request.method in SAFE_METHODS
-
 
 class HotelViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Hotel.objects.all()
@@ -27,6 +25,26 @@ class HotelViewSet(viewsets.ReadOnlyModelViewSet):
 
         return Response(CategoriaSerializer(tipos, many=True, context={'request': request}).data)
 
+class CategoriaQuartoViewSet(viewsets.ModelViewSet):
+    queryset = CategoriaQuarto.objects.all()
+    serializer_class = [CategoriaSerializer]
+    authentication_classes = []
+    permission_classes = [ReadOnly]
+
+    def list(self, request, *args, **kwargs):        
+        quartos = Quarto.objects.all().filter(hotel=self.kwargs['id_hotel'])
+        quartos_ids = quartos.values_list('id', flat=True)
+        quartos_reservados_ids = Reserva.objects.filter(data_inicio__gte=self.kwargs['data_inicio'], data_fim__lte=self.kwargs['data_fim'], cancelada=False).values_list('quarto', flat=True)
+        quartos_liberados = list(set(quartos_ids).difference(quartos_reservados_ids))
+
+        categorias = []
+        for quarto in quartos:
+            if quarto.id in quartos_liberados:
+                categorias.append(quarto.categoria)
+        categorias = list(set(categorias))
+
+        serializer = CategoriaSerializer(categorias, many=True)
+        return Response(serializer.data)
 
 class ReservaPermission(BasePermission):
     def has_permission(self, request, view):
@@ -122,6 +140,7 @@ class EspacoReservaViewSet(viewsets.ModelViewSet):
 class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
+    authentication_classes = []
     permission_classes = [ReservaPermission]
 
     def get_serializer_class(self):
