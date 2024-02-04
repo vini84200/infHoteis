@@ -100,42 +100,34 @@
 
 .services,
 .rooms{
-    display: grid;
-    align-items: center;
+    display: flex;
+    align-items: flex-start;
     justify-content: flex-start;
+    flex-wrap: wrap;
     gap: 30px;
     width: 100%;
 }
 
 .services{
-    grid-template-columns: repeat(5,1fr);
+    gap: 5px;
+    flex-direction: column;
 }
 
-.rooms{
-    grid-template-columns: repeat(2,1fr);
-}
-
-.service{
-    height: 125px;
-    width: 125px;
-    min-width: 125px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* From https://css.glass */
-    background: rgba(255, 255, 255, 0.925);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255, 255, 255, 1); 
-    border: 1px solid var(--red);
-    border-radius: 20px; 
+.service::marker{
     color: var(--red);
-    margin: 0 auto;
+}
+
+.modalContainer{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .room{
     width: 100%;
-    min-width: 300px;
+    max-width: 375px;
     display: flex;
     flex-direction: column;
     align-items: center;

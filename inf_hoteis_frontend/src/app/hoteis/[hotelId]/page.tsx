@@ -1,7 +1,7 @@
 'use client';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "./styles.module.css";
-import {Button, Image, InputNumber, message, Rate} from 'antd';
+import {Button, Image, InputNumber, message, Modal, Rate} from 'antd';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {useQuery} from "@tanstack/react-query";
 import api from "@/apiOperations/api";
@@ -19,6 +19,7 @@ interface Hotel {
 }
 
 export default function Hotel({params}: { params: { hotelId: string } }) {
+  const [open, setOpen] = useState(false);
   const hotelId = params.hotelId;
   const hotelQuery = useQuery<Hotel>({
     queryKey: ['hotel', hotelId],
@@ -28,7 +29,6 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
     staleTime: 1000 * 60 * 5,
   });
   const tipos = ["Familia Premium", "Familia", "Solteiro"]
-
 
   const {
     register,
@@ -54,6 +54,16 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
     messageApi.error("Erro ao buscar hotel").then()
   }
 
+  const showModal = () => {
+    setOpen(true);
+  };
+  const handleOk = () => {
+    setOpen(false);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
   return (
     <div className={styles.container}>
@@ -81,19 +91,6 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
             </p>
           </div>
           <div className={styles.listContainer}>
-            <h1>Serviços oferecidos</h1>
-            <div className={styles.services}>
-              <div className={styles.service}>a</div>
-              <div className={styles.service}>a</div>
-              <div className={styles.service}>a</div>
-              <div className={styles.service}>a</div>
-              <div className={styles.service}>a</div>
-              <div className={styles.service}>a</div>
-              <div className={styles.service}>a</div>
-              <div className={styles.service}>a</div>
-            </div>
-          </div>
-          <div className={styles.listContainer}>
             <h1>Tipos de quarto disponíveis</h1>
             <Image.PreviewGroup
               preview={{
@@ -101,51 +98,53 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
               }}
             >
               <div className={styles.rooms}>
-                <div className={styles.room}>
-                <span>
-                  <div className={styles.type}>Tipo do quarto</div>
-                  <div className={styles.bedrooms}>Qtde de camas: {"aqui"}</div>
-                  <div className={styles.price}>R$ {"DINHEIRO"}</div>
-                </span>
-                  <div className={styles.roomImage}>
-                    <Image
-                      alt="Imagem do hotel"
-                      width={'100%'}
-                      height={'100%'}
-                      src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?cs=srgb&dl=pexels-pixabay-258154.jpg&fm=jpg"
-                    />
-                  </div>
-                </div>
-                <div className={styles.room}>
-                <span>
-                    <div className={styles.type}>Tipo do quarto</div>
-                    <div className={styles.bedrooms}>Qtde de camas: {"aqui"}</div>
-                    <div className={styles.price}>R$ {"DINHEIRO"}</div>
-                  </span>
-                  <div className={styles.roomImage}>
-                    <Image
-                      alt="Imagem do hotel"
-                      width={'100%'}
-                      height={'100%'}
-                      src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?cs=srgb&dl=pexels-pixabay-258154.jpg&fm=jpg"
-                    />
-                  </div>
-                </div>
-                <div className={styles.room}>
-                <span>
-                  <div className={styles.type}>Tipo do quarto</div>
-                  <div className={styles.bedrooms}>Qtde de camas: {"aqui"}</div>
-                  <div className={styles.price}>R$ {"DINHEIRO"}</div>
-                </span>
-                  <div className={styles.roomImage}>
-                    <Image
-                      alt="Imagem do hotel"
-                      width={'100%'}
-                      height={'100%'}
-                      src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?cs=srgb&dl=pexels-pixabay-258154.jpg&fm=jpg"
-                    />
-                  </div>
-                </div>
+                {tipos.map((i, e)=>{
+                  return (
+                    <div key={e} className={styles.room}>
+                      <div className={styles.type}>{i}</div>
+                      <div className={styles.roomImage}>
+                        <Image
+                          alt="Imagem do hotel"
+                          width={'100%'}
+                          height={'100%'}
+                          src="https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?cs=srgb&dl=pexels-pixabay-258154.jpg&fm=jpg"
+                        />
+                      </div>
+                      <Button 
+                        type="primary" 
+                        onClick={() => {
+                          Modal.info({
+                            title: i,
+                            content: (
+                              <div className={styles.modalContainer}>
+                                <div className={styles.bedrooms}>Qtde de camas: {"aqui"}</div>                     
+                                <h3>Serviços disponíveis</h3>
+                                <ul className={styles.services}>
+                                  <li className={styles.service}>a</li>
+                                  <li className={styles.service}>a</li>
+                                  <li className={styles.service}>a</li>
+                                  <li className={styles.service}>a</li>
+                                  <li className={styles.service}>a</li>
+                                  <li className={styles.service}>a</li>
+                                  <li className={styles.service}>a</li>
+                                  <li className={styles.service}>a</li>
+                                </ul>
+                                <div className={styles.price}>R$ {"DINHEIRO"}</div>
+                              </div>
+                            ),
+                            footer: (_, { OkBtn }) => (
+                              <>
+                                <OkBtn />
+                              </>
+                            ),
+                          });
+                        }}
+                      >
+                        + detalhes
+                      </Button>
+                    </div>
+                  )})}
+                
               </div>
             </Image.PreviewGroup>
           </div>
