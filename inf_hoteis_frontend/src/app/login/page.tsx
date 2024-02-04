@@ -3,8 +3,10 @@ import React from 'react';
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {Button, Divider, Form, Input, message, Typography} from "antd";
 import login from "@/apiOperations/users/login";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import Link from "next/link";
+import SideLogo from "@components/SideLogo"
+import styles from '@styles/formPage.module.css'
 
 const {Title} = Typography;
 
@@ -44,18 +46,19 @@ export default function Login() {
     // console.log('Failed:', errorInfo);
   };
 
+  const searchParams = useSearchParams() 
+  const animate = searchParams.get('animate')
+
+
   return (
     <div>
       {contextHolder}
-      <div className={"grid md:grid-cols-2 h-screen"}>
+      <div className={styles.container}>
+        <SideLogo/>
         <div>
           <div
-            className={"flex flex-col justify-center items-center h-screen"}
+            className={styles.formContainer}
           >
-            <h1
-              className={"md:invisible text-6xl font-bold m-0 bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text"}>
-              Inf Hotéis
-            </h1>
             <Title level={1}>Entrar</Title>
             <Form<LoginFormData>
               form={form}
@@ -88,29 +91,24 @@ export default function Login() {
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" className={"mr-2"} htmlType="submit">
-                  Entrar
-                </Button>
-                <Button htmlType="button" type={"link"}>
-                  Esqueci minha senha
-                </Button>
+                <div className={styles.buttonContainer}>
+                  <Button type="primary" htmlType="submit">
+                    Entrar
+                  </Button>
+                  <Button htmlType="button" type={"link"}>
+                    Esqueci minha senha
+                  </Button>
+                </div>
               </Form.Item>
             </Form>
-            <Divider/>
-            Ou
+            <Divider>
+            Ou             
+            </Divider>
             <Link href={"/register"}>
-              <Button type="link" className={"mr-2"}>
+              <Button type="link">
                 Criar uma conta
               </Button>
             </Link>
-          </div>
-        </div>
-        <div className={"hidden md:block"}>
-          <div className={"md:h-full bg-gradient-to-r from-cyan-500 to-blue-500 py-8"}>
-            <h1
-              className={"text-6xl text-center text-white font-bold h-full flex flex-col justify-center items-center m-0"}>
-              Inf Hotéis
-            </h1>
           </div>
         </div>
       </div>
