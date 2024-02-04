@@ -31,10 +31,10 @@ class CategoriaQuartoViewSet(viewsets.ModelViewSet):
     authentication_classes = []
     permission_classes = [ReadOnly]
 
-    def list(self, request):        
-        quartos = Quarto.objects.all().filter(hotel=request.data['id_hotel'])
+    def list(self, request, *args, **kwargs):        
+        quartos = Quarto.objects.all().filter(hotel=self.kwargs['id_hotel'])
         quartos_ids = quartos.values_list('id', flat=True)
-        quartos_reservados_ids = Reserva.objects.filter(data_inicio__gte=request.data['data_inicio'], data_fim__lte=request.data['data_fim'], cancelada=False).values_list('quarto', flat=True)
+        quartos_reservados_ids = Reserva.objects.filter(data_inicio__gte=self.kwargs['data_inicio'], data_fim__lte=self.kwargs['data_fim'], cancelada=False).values_list('quarto', flat=True)
         quartos_liberados = list(set(quartos_ids).difference(quartos_reservados_ids))
 
         categorias = []
