@@ -49,14 +49,18 @@ export function NumberInput ({label, value, setValue} : NumberProps){
   )
 }
 
+type DateProps = {
+  label: string;
+  fieldProps: Array<String>;
+}
 import { DatePicker } from 'antd';
 const { RangePicker } = DatePicker;
-export function PeriodoDatas (){
+export function PeriodoDatas ({label, fieldProps} : DateProps){
   return(
     <>
-      <div className={styles.name}>Data da viagem</div>
+      <div className={styles.name}>{label}</div>
       <div className={styles.input}>
-        <RangePicker style={{width: '100%'}} format={"DD/MM/YYYY"}/>
+        <RangePicker {...fieldProps} style={{width: '100%'}} format={"DD/MM/YYYY"}/>
       </div>
     </>
   )

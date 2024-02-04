@@ -1,118 +1,79 @@
 'use client';
-import React, { useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import styles from "@styles/hotelsPage.module.css"
-import Sider from 'antd/lib/layout/Sider';
-import { List, Pagination, type SelectProps } from 'antd';
+import {List, Input} from 'antd';
 import HotelCard from '@/components/HotelCard';
+import {useQuery} from "@tanstack/react-query";
+import api from "@/apiOperations/api";
 
+import type { SearchProps } from 'antd/es/input/Search';
+import { Hotel } from './[hotelId]/page';
+const { Search } = Input;
 
 export default function Hoteis() {
-  var data = [
-    {
-      id: 1,
-      city: "RS - Gravataí",
-      street: "Rua Castilho Inácio Barcelos",
-      rate: 4
+  const hoteisQuery = useQuery<Hotel[]>({
+    queryKey: ['hoteis'],
+    queryFn: async () => {
+      return api.get('api/hoteis').then((res) => res.data)
     },
-    {
-      id: 2,
-      city: "SP - São Paulo",
-      street: "Avenida Paulista",
-      rate: 3
-    },
-    {
-      id: 3,
-      city: "RJ - Rio de Janeiro",
-      street: "Copacabana",
-      rate: 5
-    },
-    {
-      id: 4,
-      city: "MG - Belo Horizonte",
-      street: "Rua da Bahia",
-      rate: 4.5
-    },
-    {
-      id: 5,
-      city: "SC - Florianópolis",
-      street: "Avenida Beira-Mar",
-      rate: 4
-    },
-    {
-      id: 6,
-      city: "PR - Curitiba",
-      street: "Rua XV de Novembro",
-      rate: 4
-    },
-    {
-      id: 7,
-      city: "BA - Salvador",
-      street: "Pelourinho",
-      rate: 4
-    },
-    {
-      id: 8,
-      city: "PE - Recife",
-      street: "Boa Viagem",
-      rate: 5
-    },
-    {
-      id: 9,
-      city: "DF - Brasília",
-      street: "Esplanada dos Ministérios",
-      rate: 4
-    },
-    {
-      id: 10,
-      city: "AM - Manaus",
-      street: "Avenida das Torres",
-      rate: 4.5
-    },
-    {
-      id: 11,
-      city: "ES - Vitória",
-      street: "Praia do Canto",
-      rate: 3.5
-    },
-    {
-      id: 12,
-      city: "GO - Goiânia",
-      street: "Rua 83",
-      rate: 4.5
-    },
-    {
-      id: 13,
-      city: "GO - Goiânia",
-      street: "Rua 84",
-      rate: 4.5
-    }
-  ];
-
-  data.sort(function(a, b){
-      return a.city.localeCompare(b.city) || a.street.localeCompare(b.street);
+    staleTime: 1000 * 60 * 5,
   });
+
+  const data = hoteisQuery.data ?? [];
+  const [filterData, setFilterData] = useState(undefined)
+  console.log(data)
+  const onSearch: SearchProps['onSearch'] = (value) => {
+    //necessita refatoração
+    setFilterData(data.filter(el => {
+      return(
+        el.nome.toLowerCase().includes(value.toLowerCase()) ||
+        el.estado.toLowerCase().includes(value.toLowerCase()) ||
+        el.cidade.toLowerCase().includes(value.toLowerCase()) ||
+        el.rua.toLowerCase().includes(value.toLowerCase())
+      )
+    }))
+  }
+
+  function compareHotels(a : Hotel, b : Hotel) {
+    if (a.cidade < b.cidade) {
+        return -1;
+    } else if (a.cidade === b.cidade) {
+        
+        if (a.rua < b.rua) {
+            return -1;
+        } else {
+            return 1;
+        }
+    } else {
+        return 1;
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.contentContainer}>
+        <Search className={styles.searchBox} size='large' placeholder="Pesquise um estado, uma cidade, uma rua aqui..." allowClear={true} onSearch={onSearch}/>
         <div className={styles.hotelsContainer}>
-        <List
-          grid={{
-            column: 1,
-            xs: 1,
-            sm: 1,
-            md: 2,
-            lg: 2,
-            xl: 3,
-            xxl: 3,        
-          }}
-          pagination={{ position:'both', align:'center', defaultPageSize:12, pageSize:12}}
-          dataSource={data.sort()}
-          renderItem={(item) => (
-            <List.Item>
-              <HotelCard city={item.city} street={item.street} rate={item.rate}/>
-            </List.Item>
-          )}
-        />
+          <List
+            grid={{
+              column: 1,
+              xs: 1,
+              sm: 1,
+              md: 2,
+              lg: 2,
+              xl: 3,
+              xxl: 3,
+            }}
+            pagination={{position: 'both', align: 'center', defaultPageSize: 12, pageSize: 12}}
+            dataSource={filterData?.sort() || data.sort(compareHotels)}
+            loading={{spinning:hoteisQuery.isLoading, size:'large'}}
+            // loading={hoteisQuery.isLoading}
+            renderItem={(item : Hotel) => (
+              <List.Item>
+                <HotelCard src={item.imagem} nome={item.nome} cidade={item.cidade} estado={item.estado} rua={item.rua} avaliacao={item.avaliacao} id={item.id}/>
+              </List.Item>
+            )}
+          />
         </div>
       </div>
     </div>

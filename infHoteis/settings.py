@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework_simplejwt',
     'corsheaders',
-    'hoteis'
+    'hoteis',
+    'guardian'
 ]
 
 MIDDLEWARE = [
@@ -159,3 +160,10 @@ STATICFILES_DIRS=[
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend', # default
+    'guardian.backends.ObjectPermissionBackend',
+)
+MEDIA_URL = '/mediaaa/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

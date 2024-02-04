@@ -17,10 +17,12 @@
 
 .contentContainer{
     width: 80%;
+    min-height: var(--view-height);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
     gap: 20px;
 }
 
@@ -35,4 +37,14 @@
 
 .pagination{
     margin: 0 auto;
+}
+
+.searchBox{
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
 }
