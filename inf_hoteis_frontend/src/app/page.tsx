@@ -94,7 +94,7 @@ export default function Home() {
             onChange={onChange} onSearch={onSearch}/>
           </div>
           <div className={styles.field}>
-            <PeriodoDatas />
+            <PeriodoDatas/>
           </div>
           <Link href="/hoteis" className={styles.button}>
             Pesquisar

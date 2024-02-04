@@ -1,3 +1,6 @@
+import datetime
+
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -6,8 +9,11 @@ from django.db import models
 class Hotel(models.Model):
     nome = models.CharField(max_length=120)
     descricao = models.CharField(max_length=1024)
-    endereco = models.CharField(max_length=1024)
-    # FOTO
+    cidade = models.CharField(max_length=1024)
+    estado = models.CharField(max_length=1024)
+    rua = models.CharField(max_length=1024)
+    imagem = models.ImageField(upload_to='hoteis', null=True)
+    # TODO: Posicao no mapa
     avaliacao = models.FloatField()
 
     def __str__(self):
@@ -26,6 +32,7 @@ class CategoriaQuarto(models.Model):
     descricao = models.CharField(max_length=1024)
     beneficios = models.ManyToManyField(Beneficio)
     preco = models.DecimalField(decimal_places=2, max_digits=10)
+    imagem = models.ImageField(upload_to='categorias', null=True)
     hospedes = models.IntegerField()
 
     def __str__(self):
@@ -39,3 +46,22 @@ class Quarto(models.Model):
 
     def __str__(self):
         return self.numero.__str__()
+
+
+class Reserva(models.Model):
+    quarto = models.ForeignKey(Quarto, on_delete=models.CASCADE, null=False)
+    cliente = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    data_inicio = models.DateField()
+    data_fim = models.DateField()
+    hospedes = models.IntegerField()
+    preco = models.DecimalField(decimal_places=2, max_digits=10)
+    pago = models.BooleanField(default=False)
+    checkin = models.BooleanField(default=False)
+    checkout = models.BooleanField(default=False)
+    cancelada = models.BooleanField(default=False)
+
+    def can_cancel(self):
+        return not self.checkin and not self.cancelada and (self.data_inicio - datetime.date.today()).days >= 2
+
+    def __str__(self):
+        return self.quarto.__str__() + " - " + self.data_inicio.__str__() + " - " + self.data_fim.__str__()
