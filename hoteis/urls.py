@@ -10,6 +10,6 @@ router.register('hoteis', HotelViewSet)
 router.register('reservas', ReservaViewSet)
 
 urlpatterns = [
-    re_path('^espacoshotel/(?P<id_hotel>.+)/(?P<data_inicio>.+)/(?P<data_fim>.+)$', CategoriaQuartoViewSet.as_view({'get': 'list'})),
+    re_path('^categoriaQuarto/(?P<id_hotel>.+)/(?P<data_inicio>.+)/(?P<data_fim>.+)$', CategoriaQuartoViewSet.as_view({'get': 'list'})),
     path('', include(router.urls))
 ]
