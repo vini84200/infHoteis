@@ -1,25 +1,52 @@
 import datetime
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
-from hoteis.models import Hotel, Reserva, Quarto
-from hoteis.serializers import HotelSerializer, ReservaSerializer, CategoriaSerializer, QuartoSerializer
+from hoteis.models import Hotel, Reserva, Quarto, CategoriaQuarto
+from hoteis.serializers import HotelSerializer, ReservaSerializer, ReservaRequestSerializer, CategoriaSerializer, QuartoSerializer
 
 
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
         return request.method in SAFE_METHODS
 
-
-class HotelViewSet(viewsets.ModelViewSet):
+class HotelViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Hotel.objects.all()
     serializer_class = HotelSerializer
     authentication_classes = []
+
+    @action(detail=True, methods=['get'])
+    def tipos(self, request, pk=None, *args, **kwargs):
+        hotel = self.get_object()
+        tipos = CategoriaQuarto.objects.filter(quarto__hotel=hotel).distinct()
+
+        return Response(CategoriaSerializer(tipos, many=True, context={'request': request}).data)
+
+class CategoriaQuartoViewSet(viewsets.ModelViewSet):
+    queryset = CategoriaQuarto.objects.all()
+    serializer_class = [CategoriaSerializer]
+    authentication_classes = []
     permission_classes = [ReadOnly]
+
+    def list(self, request, *args, **kwargs):        
+        quartos = Quarto.objects.all().filter(hotel=self.kwargs['id_hotel'])
+        quartos_ids = quartos.values_list('id', flat=True)
+        quartos_reservados_ids = Reserva.objects.filter(data_inicio__gte=self.kwargs['data_inicio'], data_fim__lte=self.kwargs['data_fim'], cancelada=False).values_list('quarto', flat=True)
+        quartos_liberados = list(set(quartos_ids).difference(quartos_reservados_ids))
+
+        categorias = []
+        for quarto in quartos:
+            if quarto.id in quartos_liberados:
+                categorias.append(quarto.categoria)
+        categorias = list(set(categorias))
+
+        serializer = CategoriaSerializer(categorias, many=True)
+        return Response(serializer.data)
 
 class ReservaPermission(BasePermission):
     def has_permission(self, request, view):
@@ -41,38 +68,22 @@ class ReservaPermissionAll(BasePermission):
 class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
+    authentication_classes = []
     permission_classes = [ReservaPermission]
 
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return ReservaRequestSerializer
+        if self.request.method == 'POST':
+            return ReservaRequestSerializer
+        return super().get_serializer_class()
+
     def create(self, request, *args, **kwargs):
-        request.data['cliente'] = request.user.id
-        # Verificar se não está no passado
-        if datetime.date.today() > datetime.datetime.strptime(request.data['data_inicio'], '%Y-%m-%d').date():
-            return Response({'detail': 'Data de início no passado'}, status=status.HTTP_400_BAD_REQUEST)
-        # Verificar se o fim é depois do início
-        if datetime.datetime.strptime(request.data['data_inicio'], '%Y-%m-%d').date() >= datetime.datetime.strptime(
-                request.data['data_fim'], '%Y-%m-%d').date():
-            return Response({'detail': 'Data de fim antes da data de início'}, status=status.HTTP_400_BAD_REQUEST)
+        reserva = self.get_serializer(data=request.data)
+        reserva.is_valid(raise_exception=True)
+        reservas = reserva.create(reserva.validated_data)
 
-        # Verificar se quarto está disponível
-        # Isso é feito verificando se existe alguma reserva que começa antes do fim e termina depois do início
-        if Reserva.objects.filter(quarto=request.data['quarto'], data_inicio__lte=request.data['data_fim'],
-                                  data_fim__gte=request.data['data_inicio'], cancelada=False).exists():
-            return Response({'detail': 'Quarto não disponível'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Calcular preço
-        quarto = Quarto.objects.get(id=request.data['quarto'])
-        # request.data['quarto'] = {'id': quarto.id}
-        request.data['hospedes'] = quarto.categoria.hospedes
-        duracao = (datetime.datetime.strptime(request.data['data_fim'], '%Y-%m-%d').date() - datetime.datetime.strptime(
-            request.data['data_inicio'], '%Y-%m-%d').date()).days
-        request.data['preco'] = quarto.categoria.preco * duracao
-
-        request.data['pago'] = False
-        request.data['checkin'] = False
-        request.data['checkout'] = False
-        request.data['cancelada'] = False
-
-        return super().create(request, *args, **kwargs)
+        return Response(ReservaSerializer(reservas, many=True).data, status=status.HTTP_201_CREATED)
 
     def destroy(self, request, *args, **kwargs):
         reserva = self.get_object()
