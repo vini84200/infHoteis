@@ -98,33 +98,38 @@
     gap: 30px;
 }
 
-.services,
 .rooms{
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: flex-start;
+    grid-template-columns: repeat(2,1fr);
     gap: 30px;
     width: 100%;
 }
 
-.service{
-    height: 125px;
-    width: 125px;
-    min-width: 125px;
+.modalContainer{
     display: flex;
-    align-items: center;
-    justify-content: center;
-    /* From https://css.glass */
-    background: rgba(255, 255, 255, 0.925);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255, 255, 255, 1); 
-    border: 1px solid var(--red);
-    border-radius: 20px; 
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.services{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+
+.service{
+    margin-left: 1rem;
+}
+
+.service::marker{
     color: var(--red);
-    cursor: pointer;
 }
 
 .room{
