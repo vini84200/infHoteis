@@ -48,6 +48,7 @@ class EspacoHotel(models.Model):
     nome = models.CharField(max_length=120,null=False)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, null=False)
     autorizacao = models.BooleanField(default=False)
+    descricao = models.TextField(null=True)
     def __str__(self):
         return self.nome
 

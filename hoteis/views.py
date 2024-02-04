@@ -5,8 +5,8 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
 
-from hoteis.models import Hotel, Reserva, Quarto
-from hoteis.serializers import HotelSerializer, ReservaSerializer
+from hoteis.models import Hotel, Reserva, Quarto, EspacoHotel
+from hoteis.serializers import HotelSerializer, ReservaSerializer, EspacoHotelSerializer
 
 
 class ReadOnly(BasePermission):
@@ -32,6 +32,17 @@ class ReservaPermission(BasePermission):
             return False
         return obj.cliente == request.user or request.user.is_staff
 
+class EspacoViewSet(viewsets.ModelViewSet):
+    queryset = EspacoHotel.objects.all()
+    serializer_class = EspacoHotelSerializer
+    authentication_classes = []
+    permission_classes = [ReadOnly]
+
+    def list(self, request, *args, **kwargs):
+        hotel = self.kwargs['hotel']
+        queryset = EspacoHotel.objects.filter(hotel=hotel)
+        serializer = EspacoHotelSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.all()
@@ -39,7 +50,7 @@ class ReservaViewSet(viewsets.ModelViewSet):
     permission_classes = [ReservaPermission]
 
     def create(self, request, *args, **kwargs):
-        request.data['cliente'] = request.user.id
+        #request.data['cliente'] = request.user.id
         # Verificar se não está no passado
         if datetime.date.today() > datetime.datetime.strptime(request.data['data_inicio'], '%Y-%m-%d').date():
             return Response({'detail': 'Data de início no passado'}, status=status.HTTP_400_BAD_REQUEST)
@@ -57,7 +68,7 @@ class ReservaViewSet(viewsets.ModelViewSet):
         # Calcular preço
         quarto = Quarto.objects.get(id=request.data['quarto'])
         # request.data['quarto'] = {'id': quarto.id}
-        request.data['hospedes'] = quarto.categoria.hospedes
+        #request.data['hospedes'] = quarto.categoria.hospedes
         duracao = (datetime.datetime.strptime(request.data['data_fim'], '%Y-%m-%d').date() - datetime.datetime.strptime(
             request.data['data_inicio'], '%Y-%m-%d').date()).days
         request.data['preco'] = quarto.categoria.preco * duracao
