@@ -113,7 +113,7 @@ class ReservaViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def get_queryset(self):
-        return Reserva.objects.filter(cliente=self.request.user)
+        return Reserva.objects.filter(cliente=self.request.user.id)
     
     @action(detail=True, methods=['get'])
     def disponibilidade(self, request, pk):
@@ -121,9 +121,17 @@ class ReservaViewSet(viewsets.ModelViewSet):
         data_fim = request.query_params.get('data_fim')
         categoria = request.query_params.get('categoria')
 
+        if datetime.date.today() > datetime.datetime.strptime(data_inicio, '%Y-%m-%d').date():
+            return Response({'detail': 'Data de início no passado'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verificar se o fim é depois do início
+        if datetime.datetime.strptime(data_inicio, '%Y-%m-%d') > datetime.datetime.strptime(
+                data_fim, '%Y-%m-%d'):
+            return Response({'detail': 'Data de fim antes da data de início'}, status=status.HTTP_400_BAD_REQUEST)
+
         quartos = Quarto.objects.all().filter(hotel=pk)
         quartos_ids = quartos.values_list('id', flat=True)
-        quartos_reservados_ids = Reserva.objects.filter(data_inicio__gte=data_inicio, data_fim__lte=data_fim, cancelada=False).values_list('quarto', flat=True)
+        quartos_reservados_ids = Reserva.objects.filter(data_inicio__lte=data_fim, data_fim__gte=data_inicio, cancelada=False).values_list('quarto', flat=True)
         quartos_liberados = list(set(quartos_ids).difference(quartos_reservados_ids))
 
         disponiveis = []
