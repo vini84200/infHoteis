@@ -73,22 +73,22 @@ const LogoComponent = () => {
         </div>
       ),
     },
-    {
-      key: '4',
-      label: (
-        <div className={styles.mobileLink}>
-          <Link className={styles.link} href={"/login"}>Serviços</Link>
-        </div>
-      ),
-    },
-    {
-      key: '5',
-      label: (
-        <div className={styles.mobileLink}>
-          <Link className={styles.link} href={"/login"}>História</Link>
-        </div>
-      ),
-    },
+    // {
+    //   key: '4',
+    //   label: (
+    //     <div className={styles.mobileLink}>
+    //       <Link className={styles.link} href={"/login"}>Serviços</Link>
+    //     </div>
+    //   ),
+    // },
+    // {
+    //   key: '5',
+    //   label: (
+    //     <div className={styles.mobileLink}>
+    //       <Link className={styles.link} href={"/login"}>História</Link>
+    //     </div>
+    //   ),
+    // },
     {
       key: '1',
       label: (
@@ -123,8 +123,8 @@ const LogoComponent = () => {
         </div>
         <div className={styles.linksContainer}>
           <Link className={styles.link} href={"/hoteis"}>Hotéis</Link>
-          <Link className={styles.link} href={"/login"}>Serviços</Link>
-          <Link className={styles.link} href={"/login"}>História</Link>
+          {/* <Link className={styles.link} href={"/login"}>Serviços</Link>
+          <Link className={styles.link} href={"/login"}>História</Link> */}
         </div>
         <div className={styles.userContainer}>
           { !isLoggedin ? 

@@ -10,6 +10,7 @@
     --subtitle-font-size: clamp(1rem, 2vw, 1.35rem);
     --text-font-size: clamp(0.8rem, 1.8vw, 1rem);
     --title-font-size: clamp(1.5rem, 4vw, 2rem);
+    --huge-font-size: clamp(3rem, 6vw, 5rem);
     --button-font-size: clamp(1rem, 2vw, 1.2rem);
     --view-height: calc(100vh - var(--footer-height) - var(--header-height));
 
@@ -33,6 +34,14 @@ button{
 
 .ant-image-mask{
     z-index: 999;
+}
+
+.ant-spin-container{
+    min-height: calc(0.5*var(--view-height));
+}
+
+.ant-spin-blur{
+    opacity: 0 !important;
 }
 
 h1,h2,h3,h4,h5,h6{

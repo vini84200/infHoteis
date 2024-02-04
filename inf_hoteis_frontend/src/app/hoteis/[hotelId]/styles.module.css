@@ -29,7 +29,7 @@
     object-position: center;
 }
 
-.mainImage .location{
+.mainImage .locationContainer{
     position: absolute;
     left: 0;
     bottom: 0;
@@ -44,6 +44,29 @@
     font-size: clamp(2rem, 5vw, 4rem);
     background: linear-gradient(25deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 45%);
     text-shadow: 0px 0px 50px rgba(0,0,0,0.4);    
+}
+
+.mainImage .location{
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mainImage .location > :first-child{
+    font-weight: 700;
+    font-size: calc(0.8*var(--huge-font-size));
+}
+
+.mainImage .location > :nth-child(2){
+    font-weight: 300;
+    font-size: calc(0.6*var(--huge-font-size));
+}
+
+.mainImage .location > :last-child{
+    font-weight: 100;
+    font-size: calc(0.4*var(--huge-font-size));
 }
 
 .content{
@@ -155,16 +178,6 @@
     width: 40%;
 }
 
-.field{
-    width: 100%;
-    height: max-content;
-    font-size: var(--text-font-size);
-    gap: 5px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
 .roomsSet{
     border-top: 1px solid var(--red-50);
     border-bottom: 1px solid var(--red-50);
@@ -176,11 +189,28 @@
     gap: 20px;
 }
 
+.date{
+    margin: 20px 0;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 15px;
+    font-weight: bold;
+}
+
 .roomSelect{
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
     flex-direction: row;
+}
+
+.roomSelect .label{
+    font-weight: bold;
+    font-size: var(--text-font-size);
 }
 
 .roomTypeSelect{
