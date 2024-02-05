@@ -33,7 +33,7 @@
     width: 400px;
     border-radius: 5%;
     display: flex;
-    
+
 }
 .borda{
     margin: 10px;
@@ -49,10 +49,13 @@
 
 .botao{
     background-color: rgb(255, 0, 0);
-    width: 20%;
     height: 50px;
     margin-top: 20px;
 }
 .linha{
     margin-top: 10px;
+}
+
+.linha > * {
+    margin-left: 1em;
 }

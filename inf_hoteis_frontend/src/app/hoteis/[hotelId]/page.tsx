@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import {Button, DatePicker, Form, Image, InputNumber, message, Modal, Rate} from 'antd';
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import api from "@/apiOperations/api";
+import ReservaModal from "@components/ReservaModal/reservaModal";
 
 type Inputs = {
   [key: string]: number;
@@ -34,6 +35,11 @@ export interface TipoQuarto {
 
 const {RangePicker} = DatePicker;
 
+interface FormData {
+  tipo: { id: number; quantidade: any }[];
+  data: { inicio: any; fim: any };
+}
+
 export default function Hotel({params}: { params: { hotelId: string } }) {
   const [open, setOpen] = useState(false);
   const hotelId = params.hotelId;
@@ -52,6 +58,8 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
     staleTime: 1000 * 60 * 5,
   });
   const queryClient = useQueryClient();
+  const [formData, setFormData] = useState<FormData | undefined>();
+
   const reservaMutation = useMutation({
     mutationKey: ['reserva', hotelId],
     mutationFn: (data: { tipo: { id: number, quantidade: number }[], data: { inicio: string, fim: string } }) => {
@@ -95,6 +103,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
     }
   })
   const tipos = tiposQuery.data ?? [];
+  const [reservationFinishModal, setReservationFinishModal] = useState(false);
 
   const [reservation, setReservation] = useState();
   const [messageApi, contextHolder] = message.useMessage();
@@ -126,6 +135,24 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
   const handleCancel = () => {
     setOpen(false);
   };
+  console.log(
+    formData?.tipo.reduce(
+      (acc, t) => {
+        console.log(t, acc)
+        if (t.quantidade === 0 || !t.quantidade) {
+          return acc
+        }
+        const tipo = tipos.find((tipo) => tipo.id === t.id)
+        if (!tipo) {
+          return acc
+        }
+        const preco = Number(tipo.preco)
+        console.log("Mul", preco * t.quantidade)
+        console.log("Res", acc + preco * t.quantidade)
+        return acc + preco * t.quantidade
+      }
+      , 0))
+
 
   return (
     <div className={styles.container}>
@@ -226,7 +253,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
             form={form}
             onFinish={(a) => {
               console.log(a)
-              const data = {
+              const data: FormData = {
                 tipo: Object.keys(a.tipo).filter((k) => Number(k) > 0).map((k) => ({
                   id: Number(k),
                   quantidade: a.tipo[k]
@@ -237,7 +264,9 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
                 }
               }
               console.log(data)
-              reservaMutation.mutate(data)
+              // reservaMutation.mutate(data)
+              setReservationFinishModal(true)
+              setFormData(data)
             }}
             onFinishFailed={(a) => {
             }}
@@ -309,6 +338,42 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
           </Form>
         </div>
       </div>
+      {!!formData &&
+        <Modal
+          open={reservationFinishModal}
+          footer={null}
+          onCancel={() => {
+            setReservationFinishModal(false)
+          }}
+
+        >
+
+          < ReservaModal reserva={{
+            preco: formData.tipo.reduce((acc, t) => {
+              console.log(t, acc)
+              if (t.quantidade === 0 || !t.quantidade) {
+                return acc
+              }
+              const tipo = tipos.find((tipo) => tipo.id === t.id)
+              if (!tipo) {
+                return acc
+              }
+              console.log(tipo)
+              return acc + Number(tipo.preco) * t.quantidade
+            }, 0) * ((new Date(formData.data.fim).getTime() - new Date(formData.data.inicio).getTime()) / (24 * 60 * 60 * 1000)),
+            dataInicio: formData.data.inicio,
+            dataFim: formData.data.fim,
+            hotel: hotelQuery.data!,
+            quartos: formData.tipo.map((t) => ({
+              tipo: tipos.find((tipo) => tipo.id === t.id)!,
+              quantidade: t.quantidade,
+              id: t.id
+            }))
+
+
+          }}/>
+        </Modal>
+      }
     </div>
   );
 }

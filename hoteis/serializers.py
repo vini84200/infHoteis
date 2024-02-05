@@ -1,6 +1,8 @@
 import datetime
 from logging import info
 
+from django.contrib.auth.models import User
+
 from hoteis.models import Hotel, Quarto, Beneficio, CategoriaQuarto, Reserva, EspacoHotel, EspacoHotelReserva
 from rest_framework import serializers
 from rest_framework.validators import ValidationError
@@ -117,3 +119,8 @@ class ReservaSerializer(serializers.ModelSerializer):
         model = Reserva
         fields = ['id', 'quarto', 'cliente', 'data_inicio', 'data_fim', 'preco', 'pago', 'checkin',
                   'checkout', 'cancelada', 'hotel']
+
+class UsuarioSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
