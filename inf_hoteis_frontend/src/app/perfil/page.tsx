@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./styles.module.css"
 import {CheckCircleFilled, CheckCircleOutlined, CloseCircleFilled, DollarOutlined, ExclamationCircleFilled, HistoryOutlined, UserOutlined} from '@ant-design/icons'
-import { Button, Collapse, Image, Modal, Tabs } from 'antd'
+import { Button, Collapse, Image, Modal, Select, Tabs } from 'antd'
 import type { TabsProps, CollapseProps } from 'antd';
 import getMe from "@/apiOperations/users/getMe";
 import {UseQueryOptions, UseQueryResult, useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
@@ -11,6 +11,7 @@ import {message} from 'antd';
 import api from "@/apiOperations/api";
 import Search from 'antd/es/input/Search'
 import { SearchProps } from 'antd/lib/input'
+import { Option } from 'antd/es/mentions'
 
 type Props = {}
 
@@ -47,7 +48,6 @@ function Reservations({}: Props) {
     staleTime: 1000 * 60 * 5,
   });
 
-  
   var reservas = reservationQuery?.data ?? [];
 
   const [filterData, setFilterData] = useState(reservas)
@@ -75,20 +75,54 @@ function Reservations({}: Props) {
     });
   };
 
-  const onSearch: SearchProps['onSearch'] = (value) => {
-    console.log(reservas)
+  const [researchType, setResearchType] = useState<String>();
+
+  const onSearch: SearchProps['onSearch'] = (value, _e, info) => {    
+    value = value.length == 1 ? "0" + value : value
+
     setFilterData(reservas.filter(el => {
+      const [ano_inicio, mes_inicio, dia_inicio] = el.data_inicio.split("-");
+      const [ano_fim, mes_fim, dia_fim] = el.data_fim.split("-");
       return(
-        el.data_inicio.toLowerCase().includes(value.toLowerCase()) ||
-        el.data_fim.toLowerCase().includes(value.toLowerCase())
+        researchType == "dia_inicio" && dia_inicio == (value) ||
+        researchType == "mes_inicio" && mes_inicio == (value) ||
+        researchType == "ano_inicio" && ano_inicio == (value) ||
+        researchType == "dia_fim" && dia_fim == (value) ||
+        researchType == "mes_fim" && mes_fim == (value) ||
+        researchType == "ano_fim" && ano_fim == (value) ||
+        researchType == "id" && el.id == (value)
       )
     }))
   }
 
+  function formateDate(date){
+    // Convertendo para o formato "04/02/2024"
+    const partesData = date.split("-");
+    const dataFormatoNovo = `${partesData[2]}/${partesData[1]}/${partesData[0]}`;
+
+    return dataFormatoNovo;  
+  }
+
+  const handleChange = (value: string) => {
+    setResearchType(value)
+  };
+
+  const selectBefore = (
+    <Select onChange={handleChange} defaultValue={"dia"}>
+      <Option value="dia_inicio">Dia de início</Option>
+      <Option value="mes_inicio">Mês de início</Option>
+      <Option value="ano_inicio">Ano de início</Option>
+      <Option value="dia_fim">Dia de fim</Option>
+      <Option value="mes_fim">Mês de fim</Option>
+      <Option value="ano_fim">Ano de fim</Option>
+      <Option value="id">ID</Option>
+    </Select>
+  );
+
   return(
     <div className={styles.reservationsContainer}>
       {contextHolder}
-      <Search className={styles.searchBox} size='large' placeholder="Pesquise um estado, uma cidade, uma rua aqui..." allowClear={true} onSearch={onSearch}/>
+      <Search addonBefore={selectBefore} enterButton className={styles.searchBox} size='large' placeholder="Pesquise por um dia, mes ou ano" allowClear={true} onSearch={onSearch}/>
       <h2>Em andamento</h2>
       {filterData.map((item, i)=>{
         return(
@@ -106,7 +140,7 @@ function Reservations({}: Props) {
             <div className={styles.reservationInfo}>
               <div className={styles.location}>ID reserva: {item.id}</div>
               <div className={styles.date}>
-                <div>{new Date(item.data_inicio).toLocaleDateString()} até {new Date(item.data_fim).toLocaleDateString()}</div>
+                <div>{formateDate(item.data_inicio)} até {formateDate(item.data_fim)}</div>
               </div>
               <div className={styles.statusContainer}>
                 {!item.pago && <div><HistoryOutlined style={{color: "gray"}} className={styles.statusIcon}/> aguardando pagamento...</div>}
