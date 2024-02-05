@@ -17,7 +17,7 @@
     align-items: center;
     flex-direction: column;
     padding: 30px 0;
-    gap: 30%;
+    gap: 15%;
     height: 70vh;
     background-image: url("../../assets/hotel.jpg");
     background-position: center;
@@ -32,6 +32,7 @@
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+    z-index: 0;
 }
 
 .entryBanner .title{
@@ -44,95 +45,16 @@
     text-align: center;
 }
 
-.entryBanner .findHotelContainer{
-    width: 90%;
-    background-color: white;
-    height: 100px;
-    border-radius: 5px;
-    box-shadow: 0px 5px 10px rgba(0,0,0,0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    min-width: 320px;
-    z-index: 1;
-}
-
-.entryBanner .findHotelContainer .field{
-    flex: 1;
-    height: 70%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-    border-right: 1px solid var(--red);
-    padding: 0 20px;
-}
-
-.entryBanner .findHotelContainer .field:last-of-type{
-    border: none;
-}
-
-.entryBanner .findHotelContainer .button{
-    height: 50%;
-    flex: 0.6;
+.entryBanner .button{
+    height: 70px;
+    padding: 0 40px;
     background-color: var(--red);
-    border-radius: 2%;
+    border-radius: var(--default-border-radius);
     color: white;
     margin: 0 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--button-font-size);
-}
-
-@media only screen and (max-width: 1440px) {
-    .entryBanner{
-        flex-direction: row;
-        justify-content: space-around;
-        gap: 20px;
-        height: max-content;
-        padding: 30px;
-    }
-
-    .entryBanner .findHotelContainer{
-        flex-direction: column;
-        height: auto;
-        width: 30%;
-    }
-
-    .entryBanner .findHotelContainer .field{
-        width: 80%;
-        border-right: none;
-        border-bottom: 1px solid var(--red);
-        padding: 20px;
-        gap: 20px;
-    }
-
-    .entryBanner .findHotelContainer .button{
-        height: 50%;
-        flex: 0.6;
-        background-color: var(--red);
-        border-radius: 2%;
-        color: white;
-        margin: 0 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: var(--button-font-size);
-    }
-
-    .entryBanner .findHotelContainer .button{
-        flex: 1;
-        color: white;
-        margin: 20px;
-        padding: 10px;
-    }
-}
-
-@media only screen and (max-width: 1024px) {
-    .entryBanner{
-        flex-direction: column;
-        justify-content: center;
-    }
+    font-size: calc(1.2*var(--button-font-size));
+    z-index: 1;
 }

@@ -9,6 +9,8 @@ import getMe from "@/apiOperations/users/getMe";
 import {UseQueryOptions, UseQueryResult, useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {message} from 'antd';
 import api from "@/apiOperations/api";
+import Search from 'antd/es/input/Search'
+import { SearchProps } from 'antd/lib/input'
 
 type Props = {}
 
@@ -37,7 +39,7 @@ const { confirm } = Modal;
 
 function Reservations({}: Props) {
   const [messageApi, contextHolder] = message.useMessage();
-  const reservationQuery = useQuery<[Hotel]>({
+  const reservationQuery = useQuery<[]>({
     queryKey: ['reservas'],
     queryFn: async () => {
       return api.get('api/reservas').then((res) => res.data)
@@ -45,7 +47,10 @@ function Reservations({}: Props) {
     staleTime: 1000 * 60 * 5,
   });
 
+  
   var reservas = reservationQuery?.data ?? [];
+
+  const [filterData, setFilterData] = useState(reservas)
 
   const showCancel = (id) => {
     confirm({
@@ -70,11 +75,22 @@ function Reservations({}: Props) {
     });
   };
 
+  const onSearch: SearchProps['onSearch'] = (value) => {
+    console.log(reservas)
+    setFilterData(reservas.filter(el => {
+      return(
+        el.data_inicio.toLowerCase().includes(value.toLowerCase()) ||
+        el.data_fim.toLowerCase().includes(value.toLowerCase())
+      )
+    }))
+  }
+
   return(
     <div className={styles.reservationsContainer}>
       {contextHolder}
+      <Search className={styles.searchBox} size='large' placeholder="Pesquise um estado, uma cidade, uma rua aqui..." allowClear={true} onSearch={onSearch}/>
       <h2>Em andamento</h2>
-      {reservas.map((item, i)=>{
+      {filterData.map((item, i)=>{
         return(
           !item.cancelada &&
           <div key={i} className={styles.reservation}>

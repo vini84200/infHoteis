@@ -142,3 +142,13 @@
         flex-direction: column;
     }
 }
+
+.searchBox{
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+}

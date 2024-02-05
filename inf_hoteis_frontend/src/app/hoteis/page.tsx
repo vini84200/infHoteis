@@ -22,6 +22,7 @@ export default function Hoteis() {
   const data = hoteisQuery.data ?? [];
   const [filterData, setFilterData] = useState(undefined)
   console.log(data)
+  
   const onSearch: SearchProps['onSearch'] = (value) => {
     //necessita refatoração
     setFilterData(data.filter(el => {
