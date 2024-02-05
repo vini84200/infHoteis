@@ -39,11 +39,11 @@ class EspacoHotelReservaSerializer(serializers.ModelSerializer):
 
 
 class HotelSerializer(serializers.ModelSerializer):
-    quarto_set = QuartoSerializer(many=True)
+    # quarto_set = QuartoSerializer(many=True)
 
     class Meta:
         model = Hotel
-        fields = ['id', 'nome', 'descricao', 'estado', 'cidade', 'rua', 'imagem', 'avaliacao', 'quarto_set']
+        fields = ['id', 'nome', 'descricao', 'estado', 'cidade', 'rua', 'imagem', 'avaliacao']
 
 
 class ReservaRequestSerializer(serializers.Serializer):
@@ -65,6 +65,8 @@ class ReservaRequestSerializer(serializers.Serializer):
             raise ValidationError('Data de início maior que a data de fim')
         if attrs['data_inicio'] < datetime.date.today():
             raise ValidationError('Data de início no passado')
+        if attrs['data_inicio'] == attrs['data_fim']:
+            raise ValidationError('O período da reserva deve ser maior que 1 dia')
 
         for reserva in attrs['reserva']:
             tipo_quarto = reserva['tipo']
@@ -104,9 +106,14 @@ class ReservaRequestSerializer(serializers.Serializer):
 
 
 class ReservaSerializer(serializers.ModelSerializer):
-    # quarto = QuartoSerializer(read_only=True)
+    quarto = QuartoSerializer(read_only=True)
+    # quarto_categoria = CategoriaSerializer(source='quarto.categoria', read_only=True)
+    hotel = HotelSerializer(source='quarto.hotel', read_only=True)
+    cliente = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+
 
     class Meta:
         model = Reserva
         fields = ['id', 'quarto', 'cliente', 'data_inicio', 'data_fim', 'preco', 'pago', 'checkin',
-                  'checkout', 'cancelada']
+                  'checkout', 'cancelada', 'hotel']

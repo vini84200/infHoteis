@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import styles from "./styles.module.css";
 import {Button, DatePicker, Form, Image, InputNumber, message, Modal, Rate} from 'antd';
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import api from "@/apiOperations/api";
 
 type Inputs = {
@@ -51,6 +51,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
     },
     staleTime: 1000 * 60 * 5,
   });
+  const queryClient = useQueryClient();
   const reservaMutation = useMutation({
     mutationKey: ['reserva', hotelId],
     mutationFn: (data: { tipo: { id: number, quantidade: number }[], data: { inicio: string, fim: string } }) => {
@@ -63,12 +64,33 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
         data_inicio: data.data.inicio,
         data_fim: data.data.fim
       }
-      return api.post(`api/reservas/`, reserva).then((res) => res.data)
+      return api.post(`api/reservas/`, reserva).then((res) => res.data).catch(
+        (e) => {
+          // If the error is a 400, it means that the reservation is not possible
+          if (e.response.status === 400) {
+            if (e.response.data.non_field_errors) {
+              return Promise.reject(e.response.data.non_field_errors.join(", "))
+            }
+            return Promise.reject(e.response.data)
+          }
+        }
+      )
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['reservas']
+      })
       messageApi.success("Reserva realizada com sucesso").then()
+      form.resetFields()
     },
     onError: (e) => {
+      // Set an error message in the form
+      form.setFields([
+        {
+          name: "date",
+          errors: [e.toString()]
+        }
+      ])
       messageApi.error(`Erro ao realizar reserva: ${e}`).then()
     }
   })
@@ -238,7 +260,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
                         ]}
                       >
                         {/*<div className={styles.roomTypeSelect}>*/}
-                        <InputNumber                          
+                        <InputNumber
                           controls={false}
                           bordered={true}
                         />
