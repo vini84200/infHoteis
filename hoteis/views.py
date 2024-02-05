@@ -19,6 +19,13 @@ class HotelViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = HotelSerializer
     authentication_classes = []
 
+    @action(detail=False, methods=['get'], url_path='hotel/(?P<nome>.+)')
+    def buscaPorNome(self, request, nome, *args, **kwargs):
+        hotel = Hotel.objects.filter(nome=nome)
+        if not hotel:
+            return Response({'detail': 'Hotel named [' + nome + '] not found'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(HotelSerializer(hotel[0]).data)
+    
     @action(detail=True, methods=['get'])
     def tipos(self, request, pk=None, *args, **kwargs):
         hotel = self.get_object()
