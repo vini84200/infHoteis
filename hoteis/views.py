@@ -7,8 +7,8 @@ from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
-from hoteis.models import Hotel, Reserva, Quarto, CategoriaQuarto
-from hoteis.serializers import HotelSerializer, ReservaSerializer, ReservaRequestSerializer, CategoriaSerializer, QuartoSerializer
+from hoteis.models import Hotel, Reserva, Quarto, CategoriaQuarto, EspacoHotel, EspacoHotelReserva
+from hoteis.serializers import HotelSerializer, ReservaSerializer, ReservaRequestSerializer, QuartoSerializer, CategoriaSerializer, EspacoHotelSerializer, EspacoHotelReservaSerializer
 
 class ReadOnly(BasePermission):
     def has_permission(self, request, view):
@@ -75,6 +75,86 @@ class ReservaPermissionAll(BasePermission):
         return True
     def has_object_permission(self, request, view, obj):
         return True
+
+class EspacoViewSet(viewsets.ModelViewSet):
+    queryset = EspacoHotel.objects.all()
+    serializer_class = EspacoHotelSerializer
+    permission_classes = [ReadOnly]
+
+    def list(self, request, *args, **kwargs):
+        hotel = self.kwargs['hotel']
+        queryset = EspacoHotel.objects.filter(hotel=hotel)
+        serializer = EspacoHotelSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+import sys
+class EspacoReservaPermission(BasePermission):
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            return False         
+        if not request.data:
+            return True
+        espaco = EspacoHotel.objects.filter(id=request.data['idEspaco'])[0]
+        reservas = Reserva.objects.filter(cliente=request.data['cliente'], data_inicio__lte=request.data['data_inicio'][0:10], data_fim__gte=request.data['data_fim'][0:10])
+        valid = False
+        print(request.data['cliente'], sys.stderr)
+        print(str(request.data['data_inicio'][0:10]), sys.stderr)
+        print(Reserva.objects.all()[0].cliente.id, sys.stderr)
+        for reserva in reservas:
+            quarto = Quarto.objects.filter(id=reserva.quarto.id)[0]       
+            if quarto.hotel == espaco.hotel:
+                if reserva.pago:
+                    valid = True
+        return valid
+
+    def has_object_permission(self, request, view, obj):
+        if request.user.is_staff:
+            return True
+        if request.method in SAFE_METHODS:
+            return True
+        if request.method == 'PUT':
+            return False
+        return obj.cliente == request.user.id
+            
+
+class EspacoReservaViewSet(viewsets.ModelViewSet):
+    queryset = EspacoHotelReserva.objects.all()
+    serializer_class = EspacoHotelReservaSerializer
+    permission_classes = [EspacoReservaPermission]
+
+    def create(self, request, *args, **kwargs):
+        # Verificar se não está no passado
+        if datetime.date.today() > datetime.datetime.strptime(request.data['data_inicio'], '%Y-%m-%d %H:%M:%S').date():
+            return Response({'detail': 'Data de início no passado'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Verificar se o fim é depois do início
+        if datetime.datetime.strptime(request.data['data_inicio'], '%Y-%m-%d %H:%M:%S') >= datetime.datetime.strptime(
+                request.data['data_fim'], '%Y-%m-%d %H:%M:%S'):
+            return Response({'detail': 'Data de fim antes da data de início'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Verificar se Espaço está disponível
+        # Isso é feito verificando se existe alguma reserva que começa antes do fim e termina depois do início
+        if EspacoHotelReserva.objects.filter(idEspaco=request.data['idEspaco'], data_inicio__lte=request.data['data_fim'],
+                                  data_fim__gte=request.data['data_inicio'], autorizada=True).exists():
+            return Response({'detail': 'Espaço não disponível'}, status=status.HTTP_400_BAD_REQUEST)
+        duracao = (datetime.datetime.strptime(request.data['data_fim'], '%Y-%m-%d %H:%M:%S') - datetime.datetime.strptime(
+            request.data['data_inicio'], '%Y-%m-%d %H:%M:%S')).seconds 
+        if duracao > 8 * 60 * 60:
+            return Response({'detail': 'Reservas de Espaço não podem ter duração maior que 8 horas'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        espaco = EspacoHotel.objects.filter(id=request.data['idEspaco'])[0]
+ 
+        request.data['autorizada'] = not espaco.autorizacao
+
+
+    
+        return super().create(request, *args, **kwargs)
+
+    def get_queryset(self):
+        return EspacoHotelReserva.objects.filter(cliente=self.request.user)
+
+
+
 
 class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.all()

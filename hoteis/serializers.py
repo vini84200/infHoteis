@@ -1,8 +1,8 @@
 import datetime
 from logging import info
 
+from hoteis.models import Hotel, Quarto, Beneficio, CategoriaQuarto, Reserva, EspacoHotel, EspacoHotelReserva
 from rest_framework import serializers
-from hoteis.models import Hotel, Quarto, Beneficio, CategoriaQuarto, Reserva
 from rest_framework.validators import ValidationError
 
 
@@ -26,6 +26,16 @@ class QuartoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quarto
         fields = ['numero', 'categoria', 'hotel']
+
+class EspacoHotelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EspacoHotel
+        fields = ['id', 'nome', 'descricao', 'hotel', 'autorizacao']
+
+class EspacoHotelReservaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EspacoHotelReserva
+        fields = ['id', 'idEspaco', 'cliente', 'data_inicio', 'data_fim', 'autorizada']
 
 
 class HotelSerializer(serializers.ModelSerializer):

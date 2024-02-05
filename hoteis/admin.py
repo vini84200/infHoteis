@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from hoteis.models import Hotel, Beneficio, Quarto, CategoriaQuarto, Reserva
+from hoteis.models import Hotel, Beneficio, Quarto, CategoriaQuarto, Reserva, EspacoHotel, EspacoHotelReserva
 
 
 class QuartoInline(admin.TabularInline):
@@ -17,6 +17,18 @@ admin.site.register(Hotel, HotelAdmin)
 admin.site.register(Beneficio)
 admin.site.register(Quarto)
 admin.site.register(CategoriaQuarto)
+admin.site.register(EspacoHotel)
+
+@admin.action(description="Autorizar pedidos selecionados")
+def autorizar(modeladmin, request, queryset):
+    queryset.update(autorizada=True)
+
+
+@admin.register(EspacoHotelReserva)
+class ReservaAdmin(admin.ModelAdmin):
+    list_display = ['id', 'idEspaco', 'cliente', 'data_inicio', 'data_fim', 'autorizada']
+    list_filter = ['autorizada']
+    actions = [autorizar]
 
 
 @admin.register(Reserva)

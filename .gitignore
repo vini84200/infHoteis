@@ -1,11 +1,3 @@
-/db.sqlite3
-**.env
-.env
-/.env
-
-.idea/
-.idea
-
 # Created by https://www.toptal.com/developers/gitignore/api/python,django
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django
 
@@ -41,6 +33,7 @@ eggs/
 .eggs/
 lib/
 lib64/
+environment/
 parts/
 sdist/
 var/
