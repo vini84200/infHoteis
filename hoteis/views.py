@@ -159,7 +159,6 @@ class EspacoReservaViewSet(viewsets.ModelViewSet):
 class ReservaViewSet(viewsets.ModelViewSet):
     queryset = Reserva.objects.all()
     serializer_class = ReservaSerializer
-    authentication_classes = []
     permission_classes = [ReservaPermission]
 
     def get_serializer_class(self):
