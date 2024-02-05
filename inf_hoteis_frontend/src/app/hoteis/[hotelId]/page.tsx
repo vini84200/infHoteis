@@ -117,7 +117,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
             src={imagem}
           />
           <div className={styles.locationContainer}>
-            <div className={styles.location} style={{zIndex: 999}}>
+            <div className={styles.location} style={{zIndex: 901}}>
               <span>{cidade} - {estado}</span>
               <span>{nome}</span>
               <span>{rua}</span>
@@ -139,6 +139,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
             <Image.PreviewGroup
               preview={{
                 onChange: (current, prev) => console.log(`current index: ${current}, prev index: ${prev}`),
+                title: 'Tipos de quarto'
               }}
             >
               <div className={styles.rooms}>
@@ -190,7 +191,6 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
                     </div>
                   )
                 })}
-
               </div>
             </Image.PreviewGroup>
           </div>
@@ -229,6 +229,7 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
                       <Form.Item
                         name={['tipo', item.id]}
                         label={item.nome}
+                        className={styles.field}
                         required={false}
                         rules={[
                           {
@@ -237,9 +238,9 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
                         ]}
                       >
                         {/*<div className={styles.roomTypeSelect}>*/}
-                        <InputNumber
+                        <InputNumber                          
                           controls={false}
-                          bordered={false}
+                          bordered={true}
                         />
                         {/*</div>*/}
                       </Form.Item>
