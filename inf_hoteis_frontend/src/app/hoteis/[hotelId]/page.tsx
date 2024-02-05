@@ -5,6 +5,7 @@ import {Button, DatePicker, Form, Image, InputNumber, message, Modal, Rate} from
 import {useQuery, useQueryClient} from "@tanstack/react-query";
 import api from "@/apiOperations/api";
 import ReservaModal from "@components/ReservaModal/reservaModal";
+import getMe from "@/apiOperations/users/getMe";
 
 type Inputs = {
   [key: string]: number;
@@ -67,6 +68,13 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
 
+  const me = useQuery({
+    queryKey: ['me'],
+    queryFn: async () => {
+      return getMe()
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  })
 
   const {nome, cidade, estado, imagem, avaliacao, rua, descricao} = hotelQuery.data ?? {
     nome: "",
@@ -274,7 +282,12 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
                           console.log("Erro ao validar campos", e)
                         })
                       }}
-              >RESERVAR AGORA</Button>
+                      disabled={
+                        me.data?.logged_in === false
+                      }
+              >
+                {me.data?.logged_in === false ? "Faça login para reservar" : "RESERVAR AGORA"}
+              </Button>
             </Form.Item>
           </Form>
         </div>
