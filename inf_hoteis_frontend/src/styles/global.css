@@ -33,7 +33,7 @@ button{
 }
 
 .ant-image-mask{
-    z-index: 999;
+    z-index: 900 !important;
 }
 
 .ant-spin-container{

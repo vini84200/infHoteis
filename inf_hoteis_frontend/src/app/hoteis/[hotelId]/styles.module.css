@@ -176,6 +176,9 @@
 .bookingInfo{
     height: max-content;
     width: 40%;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .roomsSet{
@@ -208,9 +211,26 @@
     flex-direction: row;
 }
 
-.roomSelect .label{
+.roomSelect .field{
     font-weight: bold;
     font-size: var(--text-font-size);
+    display: flex;
+    width: 50%;
+    min-width: 250px;
+    justify-content: space-between;
+    align-items: space-between;
+}
+
+.roomSelect .field > :first-child{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.roomSelect .field > :first-child > :nth-child(2){
+    flex: inherit;
 }
 
 .roomTypeSelect{

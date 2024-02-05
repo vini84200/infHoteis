@@ -2,7 +2,7 @@
     position: sticky;
     top: 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: 80px;
@@ -11,7 +11,7 @@
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(255, 255, 255, 1); 
-    z-index: 9999;
+    z-index: 950;
 }
 
 .container *{
@@ -23,6 +23,8 @@
     align-items: center;
     justify-content: flex-start;
     width: 33%;
+    position: absolute;
+    left: 0;
 }
 
 .logo{
@@ -59,6 +61,8 @@
     margin-right: 5%;
     width: 33%;
     gap: 40px;
+    position: absolute;
+    right: 0;
 }
 
 .userIcon{
