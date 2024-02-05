@@ -12,14 +12,13 @@ import {
   UserOutlined
 } from '@ant-design/icons'
 import type {TabsProps} from 'antd';
-import { Button, Collapse, Image, Modal, Tabs, Form, Input, Select, DatePicker,  message } from 'antd'
+import {Button, DatePicker, Form, Image, message, Modal, Select, Tabs} from 'antd'
 import getMe from "@/apiOperations/users/getMe";
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import api from "@/apiOperations/api";
 import Search from 'antd/es/input/Search'
 import {SearchProps} from 'antd/lib/input'
-import { FormInstance } from 'antd/lib/form';
-import type { TabsProps, CollapseProps } from 'antd';
+
 const { RangePicker } = DatePicker;
 const { Option } = Select;
 
@@ -33,12 +32,18 @@ function ProfileInfo({}: Props) {
     },
     staleTime: 1000 * 60 * 5, // 5 minutes
   })
+  const perfilQuery = useQuery({
+    queryKey: ['perfil'],
+    queryFn: async () => {
+      return api.get('api/perfil').then((res) => res.data)
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+  })
 
-  console.log(me)
-  if (me.isLoading) {
+  if (me.isLoading || perfilQuery.isLoading) {
     return <div>Carregando...</div>
   }
-  if (me.isError) {
+  if (me.isError || perfilQuery.isError) {
     return <div>Erro ao carregar informações do usuário</div>
   }
   if (!me.data?.logged_in) {
@@ -50,6 +55,14 @@ function ProfileInfo({}: Props) {
       <div className={styles.field}>
         <span>Nome de usuário:</span>
         <div>{me.data?.username}</div>
+      </div>
+      <div className={styles.field}>
+        <span>Nome:</span>
+        <div>{perfilQuery.data!.first_name} {perfilQuery.data!.last_name}</div>
+      </div>
+      <div className={styles.field}>
+        <span>Email:</span>
+        <div>{me.data?.email}</div>
       </div>
     </div>
   )
@@ -241,7 +254,7 @@ function SpaceReservations({}: Props) {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
-  
+
   return(
 
     <div className={styles.spacesContainer}>
@@ -292,7 +305,7 @@ function SpaceReservations({}: Props) {
 
 
       </div>
-      
+
     </div>
   )
 }
