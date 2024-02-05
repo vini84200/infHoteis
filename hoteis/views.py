@@ -23,7 +23,15 @@ class HotelViewSet(viewsets.ReadOnlyModelViewSet):
     def buscaPorNome(self, request, nome, *args, **kwargs):
         hotel = Hotel.objects.filter(nome=nome)
         if not hotel:
-            return Response({'detail': 'Hotel named [' + nome + '] not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'detail': 'Hotel chamado [' + nome + '] não encontrado'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(HotelSerializer(hotel[0]).data)
+
+    @action(detail=False, methods=['get'], url_path='hotel/(?P<estado>.+)/(?P<cidade>.+)/(?P<rua>.+)')
+    def buscaPorEndereco(self, request, cidade, estado, rua, *args, **kwargs):
+        hotel = Hotel.objects.filter(cidade=cidade, estado=estado,rua=rua)
+        if not hotel:
+            endereco = estado + ' ' + cidade + ' ' + rua
+            return Response({'detail': 'Hotel com o endereço [' + endereco + '] não encontrado'}, status=status.HTTP_404_NOT_FOUND)
         return Response(HotelSerializer(hotel[0]).data)
     
     @action(detail=True, methods=['get'])
