@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import styles from "./styles.module.css";
 import {Button, DatePicker, Form, Image, InputNumber, message, Modal, Rate} from 'antd';
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
+import {useQuery, useQueryClient} from "@tanstack/react-query";
 import api from "@/apiOperations/api";
 import ReservaModal from "@components/ReservaModal/reservaModal";
 
@@ -60,48 +60,6 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState<FormData | undefined>();
 
-  const reservaMutation = useMutation({
-    mutationKey: ['reserva', hotelId],
-    mutationFn: (data: { tipo: { id: number, quantidade: number }[], data: { inicio: string, fim: string } }) => {
-      const reserva = {
-        hotel: Number(hotelId),
-        reserva: data.tipo.map((t) => ({
-          qtde: t.quantidade,
-          tipo: t.id
-        })).filter((t) => t.qtde > 0),
-        data_inicio: data.data.inicio,
-        data_fim: data.data.fim
-      }
-      return api.post(`api/reservas/`, reserva).then((res) => res.data).catch(
-        (e) => {
-          // If the error is a 400, it means that the reservation is not possible
-          if (e.response.status === 400) {
-            if (e.response.data.non_field_errors) {
-              return Promise.reject(e.response.data.non_field_errors.join(", "))
-            }
-            return Promise.reject(e.response.data)
-          }
-        }
-      )
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['reservas']
-      })
-      messageApi.success("Reserva realizada com sucesso").then()
-      form.resetFields()
-    },
-    onError: (e) => {
-      // Set an error message in the form
-      form.setFields([
-        {
-          name: "date",
-          errors: [e.toString()]
-        }
-      ])
-      messageApi.error(`Erro ao realizar reserva: ${e}`).then()
-    }
-  })
   const tipos = tiposQuery.data ?? [];
   const [reservationFinishModal, setReservationFinishModal] = useState(false);
 
@@ -135,23 +93,6 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
   const handleCancel = () => {
     setOpen(false);
   };
-  console.log(
-    formData?.tipo.reduce(
-      (acc, t) => {
-        console.log(t, acc)
-        if (t.quantidade === 0 || !t.quantidade) {
-          return acc
-        }
-        const tipo = tipos.find((tipo) => tipo.id === t.id)
-        if (!tipo) {
-          return acc
-        }
-        const preco = Number(tipo.preco)
-        console.log("Mul", preco * t.quantidade)
-        console.log("Res", acc + preco * t.quantidade)
-        return acc + preco * t.quantidade
-      }
-      , 0))
 
 
   return (
@@ -358,7 +299,6 @@ export default function Hotel({params}: { params: { hotelId: string } }) {
               if (!tipo) {
                 return acc
               }
-              console.log(tipo)
               return acc + Number(tipo.preco) * t.quantidade
             }, 0) * ((new Date(formData.data.fim).getTime() - new Date(formData.data.inicio).getTime()) / (24 * 60 * 60 * 1000)),
             dataInicio: formData.data.inicio,

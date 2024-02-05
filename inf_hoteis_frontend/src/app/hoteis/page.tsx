@@ -25,6 +25,7 @@ export default function Hoteis() {
     staleTime: 1000 * 60 * 5,
   });
 
+
   const data = hoteisQuery.data ?? [];
 
   const onSearch: SearchProps['onSearch'] = (value) => {

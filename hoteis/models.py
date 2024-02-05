@@ -68,7 +68,7 @@ class Hotel(models.Model):
         return self.nome
 
     class Meta:
-            ordering = ['cidade', 'rua', 'nome']
+        ordering = ['cidade', 'rua', 'nome']
 
 
 class Beneficio(models.Model):
@@ -98,13 +98,16 @@ class Quarto(models.Model):
     def __str__(self):
         return self.numero.__str__()
 
+
 class EspacoHotel(models.Model):
-    nome = models.CharField(max_length=120,null=False)
+    nome = models.CharField(max_length=120, null=False)
     hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE, null=False)
     autorizacao = models.BooleanField(default=False)
     descricao = models.TextField(null=True)
+
     def __str__(self):
         return self.nome
+
 
 class EspacoHotelReserva(models.Model):
     idEspaco = models.ForeignKey(EspacoHotel, on_delete=models.CASCADE, null=False)
@@ -112,9 +115,12 @@ class EspacoHotelReserva(models.Model):
     data_inicio = models.DateTimeField(null=False)
     data_fim = models.DateTimeField(null=False)
     autorizada = models.BooleanField(default=False)
+
     def __str__(self):
-        isAuth =  "Autorizada" if self.autorizada else "Não autorizada!"
-        return 'Reserva ' + isAuth + ' : ' + self.idEspaco.nome  + ' de ' + str(self.data_inicio) + ' até ' + str(self.data_fim)
+        isAuth = "Autorizada" if self.autorizada else "Não autorizada!"
+        return 'Reserva ' + isAuth + ' : ' + self.idEspaco.nome + ' de ' + str(self.data_inicio) + ' até ' + str(
+            self.data_fim)
+
 
 class Reserva(models.Model):
     quarto = models.ForeignKey(Quarto, on_delete=models.CASCADE, null=False)
@@ -132,3 +138,23 @@ class Reserva(models.Model):
 
     def __str__(self):
         return self.quarto.__str__() + " - " + self.data_inicio.__str__() + " - " + self.data_fim.__str__()
+
+
+class Perfil(models.Model):
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil')
+    data_nascimento = models.DateField(null=True)
+    cpf = models.CharField(max_length=11, null=True)
+    telefone = models.CharField(max_length=11, null=True)
+
+    def __str__(self):
+        return self.usuario.__str__()
+
+
+def create_user_profile(instance, created, raw, **kwargs):
+    if not created or raw:
+        return
+    print('Criando perfil para ' + instance.__str__() + '...')
+    Perfil.objects.create(usuario=instance)
+
+
+models.signals.post_save.connect(create_user_profile, sender=User)

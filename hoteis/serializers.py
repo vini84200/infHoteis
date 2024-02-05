@@ -29,10 +29,12 @@ class QuartoSerializer(serializers.ModelSerializer):
         model = Quarto
         fields = ['numero', 'categoria', 'hotel']
 
+
 class EspacoHotelSerializer(serializers.ModelSerializer):
     class Meta:
         model = EspacoHotel
         fields = ['id', 'nome', 'descricao', 'hotel', 'autorizacao']
+
 
 class EspacoHotelReservaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -113,14 +115,29 @@ class ReservaSerializer(serializers.ModelSerializer):
     hotel = HotelSerializer(source='quarto.hotel', read_only=True)
     cliente = serializers.HiddenField(default=serializers.CurrentUserDefault())
 
-
-
     class Meta:
         model = Reserva
         fields = ['id', 'quarto', 'cliente', 'data_inicio', 'data_fim', 'preco', 'pago', 'checkin',
                   'checkout', 'cancelada', 'hotel']
 
-class UsuarioSerializer(serializers.ModelSerializer):
+
+class UsuarioPerfilSerializer(serializers.ModelSerializer):
+    data_nascimento = serializers.DateField(source='perfil.data_nascimento')
+    cpf = serializers.CharField(source='perfil.cpf')
+    telefone = serializers.CharField(source='perfil.telefone')
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'data_nascimento', 'cpf', 'telefone']
+        #   The username and email should be read-only, as they are set by the User model, not the Profile model.
+        read_only_fields = ['username']
+
+    def update(self, instance, validated_data):
+        perfil_data = validated_data.pop('perfil', {})
+        instance = super().update(instance, validated_data)
+        perfil = instance.perfil
+        perfil_data = {k: v for k, v in perfil_data.items() if v is not None}
+        for attr, value in perfil_data.items():
+            setattr(perfil, attr, value)
+        perfil.save()
+        return instance

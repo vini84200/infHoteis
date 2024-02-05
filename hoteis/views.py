@@ -7,10 +7,11 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.views import APIView
 
 from hoteis.models import Hotel, Reserva, Quarto, CategoriaQuarto, EspacoHotel, EspacoHotelReserva
 from hoteis.serializers import HotelSerializer, ReservaSerializer, ReservaRequestSerializer, QuartoSerializer, \
-    CategoriaSerializer, EspacoHotelSerializer, EspacoHotelReservaSerializer
+    CategoriaSerializer, EspacoHotelSerializer, EspacoHotelReservaSerializer, UsuarioPerfilSerializer
 
 
 class ReadOnly(BasePermission):
@@ -195,7 +196,8 @@ class ReservaViewSet(viewsets.ModelViewSet):
     permission_classes = [ReservaPermission]
     filter_backends = [SearchFilter]
     search_fields = ['quarto__hotel__nome', 'quarto__hotel__cidade', 'quarto__hotel__estado', 'quarto__hotel__rua',
-                     'data_inicio', 'data_fim', 'quarto__categoria__nome', 'quarto__categoria__descricao', 'quarto__numero']
+                     'data_inicio', 'data_fim', 'quarto__categoria__nome', 'quarto__categoria__descricao',
+                     'quarto__numero']
 
     def get_serializer_class(self):
         if self.action == 'create':
@@ -257,3 +259,25 @@ class ReservaViewSet(viewsets.ModelViewSet):
 
         serializer = QuartoSerializer(disponiveis, many=True)
         return Response(serializer.data)
+
+
+class PerfilViewset(APIView):
+    def get(self, request):
+        return Response(UsuarioPerfilSerializer(request.user).data, status=status.HTTP_200_OK)
+
+    def put(self, request):
+        return self.update_fields(request)
+
+    def post(self, request):
+        return self.update_fields(request)
+
+    def update_fields(self, request):
+        usuario = request.user
+        a = UsuarioPerfilSerializer(usuario, data=request.data, partial=True)
+        a.is_valid(raise_exception=True)
+        a.save()
+        # usuario.perfil.nome = request.data['nome']
+        # usuario.perfil.cpf = request.data['cpf']
+        # usuario.perfil.telefone = request.data['telefone']
+
+        return Response(a.data, status=status.HTTP_200_OK)

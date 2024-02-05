@@ -302,6 +302,8 @@ export default function Perfil({}: Props) {
     console.log(key);
   };
 
+  // const searchParams = new URLSearchParams(window.loc
+
   const items: TabsProps['items'] = [
     {
       key: '1',
