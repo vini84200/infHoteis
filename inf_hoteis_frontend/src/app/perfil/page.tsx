@@ -187,7 +187,9 @@ function Reservations({}: Props) {
                 <div><strong>Quarto </strong> {item.quarto.numero} - {item.quarto.categoria.nome}</div>
               </div>
               <div className={styles.date}>
-                <div>{new Date(item.data_inicio).toLocaleDateString('pt-br')} até {new Date(item.data_fim).toLocaleDateString('pt-br')}</div>
+                <div>{new Date(item.data_inicio).toLocaleDateString('pt-br', {timeZone: "UTC"})} até {new Date(item.data_fim).toLocaleDateString('pt-br', {
+                  timeZone: "UTC"
+                })}</div>
               </div>
               <div className={styles.price}>
                 <div>R$ {item.preco}</div>

@@ -67,6 +67,9 @@ class Hotel(models.Model):
     def __str__(self):
         return self.nome
 
+    class Meta:
+            ordering = ['cidade', 'rua', 'nome']
+
 
 class Beneficio(models.Model):
     nome = models.CharField(max_length=120)
