@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 //import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Button, Dropdown, Space, Input, Flex, Divider, Col, Row, Form, Slider, Image, } from 'antd';
+import { Button, Dropdown, Space, Input, Flex, Divider, Col, Row, Form, Slider, Image, Modal} from 'antd';
 import { WifiOutlined, CoffeeOutlined, CarOutlined, ClockCircleOutlined, CalendarOutlined, UserOutlined } from '@ant-design/icons';
 import styles from "./styles.module.css";
 
@@ -27,6 +27,20 @@ export default function Reserva() {
       const onFinish = (values: any) => {
         console.log(values);
       };
+
+      const [isModalOpen, setIsModalOpen] = useState(false);
+
+        const showModal = () => {
+            setIsModalOpen(true);
+        };
+
+        const handleOk = () => {
+            setIsModalOpen(false);
+        };
+
+        const handleCancel = () => {
+            setIsModalOpen(false);
+        };
       
   return (
     
@@ -243,9 +257,13 @@ export default function Reserva() {
                         </div>
                     </div>
                     <Form.Item>
-                    <Button type="primary" htmlType="submit" className={styles.botao}>
+                    <Button type="primary" htmlType="submit" className={styles.botao} onClick={showModal}>
                         Fazer reserva
                     </Button>
+                    <Modal title="Reserva confirmada" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                        <p>Vá para seu <a href="http://localhost:3000/perfil">perfil</a> para ver suas reservas</p>
+                        
+                    </Modal>
                     </Form.Item>
                     
                 </div>

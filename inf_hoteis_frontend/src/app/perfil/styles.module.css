@@ -143,6 +143,12 @@
     }
 }
 
+
+.reservarEspaco{
+    margin-left: 5%;
+    margin-right: 50%;
+}
+
 .searchBox{
     width: 100%;
     max-width: 700px;

@@ -11,12 +11,16 @@ import {
   UserOutlined
 } from '@ant-design/icons'
 import type {TabsProps} from 'antd';
-import {Button, Image, message, Modal, Tabs} from 'antd'
+import { Button, Collapse, Image, Modal, Tabs, Form, Input, Select, DatePicker,  message } from 'antd'
 import getMe from "@/apiOperations/users/getMe";
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import api from "@/apiOperations/api";
 import Search from 'antd/es/input/Search'
 import {SearchProps} from 'antd/lib/input'
+import { FormInstance } from 'antd/lib/form';
+import type { TabsProps, CollapseProps } from 'antd';
+const { RangePicker } = DatePicker;
+const { Option } = Select;
 
 type Props = {}
 
@@ -122,6 +126,7 @@ function Reservations({}: Props) {
         content: e.message,
       });
     },
+
     onSuccess: () => {
       messageApi.open({
         type: 'success',
@@ -135,6 +140,7 @@ function Reservations({}: Props) {
 
 
   var reservas = reservationQuery?.data ?? [];
+
 
 
   const showCancel = (id: number) => {
@@ -216,9 +222,76 @@ function Reservations({}: Props) {
 }
 
 function SpaceReservations({}: Props) {
-  return (
+
+  const rangeConfig = {
+    rules: [{ type: 'array' as const, required: true, message: 'Please select time!' }],
+  };
+  const [form] = Form.useForm();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  
+  return(
+
     <div className={styles.spacesContainer}>
-      reservar espaços
+      <div className={styles.reservarEspaco}>
+      <Form>
+      <Form.Item
+        name="hotel"
+        label="Selecione o Hotel"
+        rules={[{ required: true, message: 'Hotel é obrigatório!' }]}
+      >
+        <Select placeholder="Hotel">
+          <Option value="doVale">Hotel do vale</Option>
+          <Option value="doCentro">Hotel do centro</Option>
+          <Option value="daSaude">Hotel da saúde</Option>
+        </Select>
+      </Form.Item>
+
+      <Form.Item
+        name="espaco"
+        label="Selecione o espaço"
+        rules={[{ required: true, message: 'Espaço é obrigatório!' }]}
+      >
+        <Select placeholder="Espaço">
+          <Option value="festa">Salão de festas</Option>
+          <Option value="jogos">Salão de jogos</Option>
+          <Option value="teatro">Teatro</Option>
+          <Option value="piscina">Piscina</Option>
+        </Select>
+      </Form.Item>
+
+      <Form.Item name="range-time-picker" label="Selecione data e horário" {...rangeConfig}>
+        <RangePicker showTime format="DD-MM-YYYY HH:mm:ss" />
+      </Form.Item>
+
+      <Form.Item >
+
+      <Button type="primary" onClick={showModal}>
+        Fazer reserva
+      </Button>
+      <Modal title="Reserva enviada para aprovação"
+              visible={isModalOpen}
+              onOk={handleOk}
+              onCancel={handleCancel}>
+        <p>Você receberá um email de confirmação em até 24 horas</p>
+      </Modal>
+    </Form.Item>
+    </Form>
+
+
+      </div>
+      
     </div>
   )
 }
