@@ -257,6 +257,7 @@ function SpaceReservations({}: Props) {
             }
             return Promise.reject(e.response.data)
           }
+          return Promise.reject("Não foi possivel fazer a reserva do espaço")
         }
       )
     },
