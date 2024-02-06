@@ -128,13 +128,10 @@ class EspacoReservaPermission(BasePermission):
         if not request.data:
             return True
         espaco = EspacoHotel.objects.filter(id=request.data['idEspaco'])[0]
-        reservas = Reserva.objects.filter(cliente=request.data['cliente'],
+        reservas = Reserva.objects.filter(cliente=request.user.id,
                                           data_inicio__lte=request.data['data_inicio'][0:10],
                                           data_fim__gte=request.data['data_fim'][0:10])
         valid = False
-        print(request.data['cliente'], sys.stderr)
-        print(str(request.data['data_inicio'][0:10]), sys.stderr)
-        print(Reserva.objects.all()[0].cliente.id, sys.stderr)
         for reserva in reservas:
             quarto = Quarto.objects.filter(id=reserva.quarto.id)[0]
             if quarto.hotel == espaco.hotel:
@@ -159,12 +156,12 @@ class EspacoReservaViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         # Verificar se não está no passado
-        if datetime.date.today() > datetime.datetime.strptime(request.data['data_inicio'], '%Y-%m-%d %H:%M:%S').date():
+        if datetime.date.today() > datetime.datetime.strptime(request.data['data_inicio'], '%Y-%m-%dT%H:%M:%S').date():
             return Response({'detail': 'Data de início no passado'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Verificar se o fim é depois do início
-        if datetime.datetime.strptime(request.data['data_inicio'], '%Y-%m-%d %H:%M:%S') >= datetime.datetime.strptime(
-                request.data['data_fim'], '%Y-%m-%d %H:%M:%S'):
+        if datetime.datetime.strptime(request.data['data_inicio'], '%Y-%m-%dT%H:%M:%S') >= datetime.datetime.strptime(
+                request.data['data_fim'], '%Y-%m-%dT%H:%M:%S'):
             return Response({'detail': 'Data de fim antes da data de início'}, status=status.HTTP_400_BAD_REQUEST)
 
         # Verificar se Espaço está disponível
@@ -174,14 +171,14 @@ class EspacoReservaViewSet(viewsets.ModelViewSet):
                                              data_fim__gte=request.data['data_inicio'], autorizada=True).exists():
             return Response({'detail': 'Espaço não disponível'}, status=status.HTTP_400_BAD_REQUEST)
         duracao = (datetime.datetime.strptime(request.data['data_fim'],
-                                              '%Y-%m-%d %H:%M:%S') - datetime.datetime.strptime(
-            request.data['data_inicio'], '%Y-%m-%d %H:%M:%S')).seconds
+                                              '%Y-%m-%dT%H:%M:%S') - datetime.datetime.strptime(
+            request.data['data_inicio'], '%Y-%m-%dT%H:%M:%S')).seconds
         if duracao > 8 * 60 * 60:
             return Response({'detail': 'Reservas de Espaço não podem ter duração maior que 8 horas'},
                             status=status.HTTP_400_BAD_REQUEST)
 
         espaco = EspacoHotel.objects.filter(id=request.data['idEspaco'])[0]
-
+        request.data['cliente'] = request.user.id
         request.data['autorizada'] = not espaco.autorizacao
 
         return super().create(request, *args, **kwargs)

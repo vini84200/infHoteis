@@ -1,6 +1,7 @@
 "use client"
 
 import React, {useMemo, useState} from 'react'
+import {Hotel, EspacoHotel} from '../hoteis/[hotelId]/page';
 
 import styles from "./styles.module.css"
 import {
@@ -241,11 +242,44 @@ function SpaceReservations({}: Props) {
     rules: [{ type: 'array' as const, required: true, message: 'Please select time!' }],
   };
   const [form] = Form.useForm();
+  const hotel = Form.useWatch('hotel', form);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
+  const fazerReservaEspaco = useMutation({
+    mutationKey: ['espaco'],
+    mutationFn: (data: {idEspaco: number, data_inicio: string, data_fim: string}) => {
+      return api.post(`api/espacoReservas/`, data).then((res) => res.data).catch(
+        (e) => {
+          // If the error is a 400, it means that the reservation is not possible
+          if (e.response.status === 400) {
+            if (e.response.data.non_field_errors) {
+              return Promise.reject(e.response.data.non_field_errors.join(", "))
+            }
+            return Promise.reject(e.response.data)
+          }
+          return Promise.reject("Não foi possivel fazer a reserva do espaço")
+        }
+      )
+    },
+    onSuccess: () => {
+      // queryClient.invalidateQueries({
+      //   queryKey: ['reservas']
+      // })
+      // messageApi.success("Reserva realizada com sucesso").then()
+      // router.push('/perfil')
+      setIsModalOpen(true);
+    },
+    onError: (e) => {
+      // Set an error message in the form
+      form.setFields([
+        {
+          name: "date",
+          errors: [e.toString()]
+        }
+      ])
+      // messageApi.error(`Erro ao realizar reserva: ${e}`).then()
+    }
+  })
 
   const handleOk = () => {
     setIsModalOpen(false);
@@ -255,20 +289,44 @@ function SpaceReservations({}: Props) {
     setIsModalOpen(false);
   };
 
+  const hoteisQuery = useQuery<Hotel[]>({
+    queryKey: ['hoteis'],
+    queryFn: async () => {
+      return api.get('api/hoteis').then((res) => res.data)
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+
+  const espacosQuery = useQuery<EspacoHotel[]>({
+    queryKey: ['espacoHotel', hotel],
+    queryFn: async () => {
+      return api.get('api/espacoshotel/' + hotel).then((res) => res.data)
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+
+
+
   return(
 
     <div className={styles.spacesContainer}>
       <div className={styles.reservarEspaco}>
-      <Form>
-      <Form.Item
+      <Form form={form} onFinish={(a) => {
+              console.log(a)
+              const data = {
+                idEspaco: a.espaco, 
+                data_inicio: a.date[0].toISOString().slice(0,19),
+                data_fim: a.date[1].toISOString().slice(0,19)
+              }
+              fazerReservaEspaco.mutate(data)
+              }}>
+      <Form.Item 
         name="hotel"
         label="Selecione o Hotel"
         rules={[{ required: true, message: 'Hotel é obrigatório!' }]}
       >
         <Select placeholder="Hotel">
-          <Option value="doVale">Hotel do vale</Option>
-          <Option value="doCentro">Hotel do centro</Option>
-          <Option value="daSaude">Hotel da saúde</Option>
+          {hoteisQuery.data?.map((item) => (<Option value={item.id}>{item.nome}</Option>))}
         </Select>
       </Form.Item>
 
@@ -278,24 +336,21 @@ function SpaceReservations({}: Props) {
         rules={[{ required: true, message: 'Espaço é obrigatório!' }]}
       >
         <Select placeholder="Espaço">
-          <Option value="festa">Salão de festas</Option>
-          <Option value="jogos">Salão de jogos</Option>
-          <Option value="teatro">Teatro</Option>
-          <Option value="piscina">Piscina</Option>
+          {espacosQuery.data?.map((item) => (<Option value={item.id}>{item.nome}</Option>))}
         </Select>
       </Form.Item>
 
-      <Form.Item name="range-time-picker" label="Selecione data e horário" {...rangeConfig}>
+      <Form.Item name="date" label="Selecione data e horário" {...rangeConfig}>
         <RangePicker showTime format="DD-MM-YYYY HH:mm:ss" />
       </Form.Item>
 
       <Form.Item >
 
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" htmlType="submit">
         Fazer reserva
       </Button>
       <Modal title="Reserva enviada para aprovação"
-              visible={isModalOpen}
+              open={isModalOpen}
               onOk={handleOk}
               onCancel={handleCancel}>
         <p>Você receberá um email de confirmação em até 24 horas</p>
