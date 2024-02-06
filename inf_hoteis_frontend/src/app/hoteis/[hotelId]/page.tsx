@@ -22,6 +22,16 @@ export interface Hotel {
   imagem: string;
 }
 
+
+export interface EspacoHotel {
+  nome : string;
+  id : number; 
+  hotel: number;
+  autorizacao: Boolean;
+  descricao: string; 
+}
+
+
 export interface TipoQuarto {
   id: number;
   nome: string;
